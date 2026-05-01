@@ -1,15 +1,14 @@
 package modelo;
 
 public class Paciente extends Usuario {
-    private String tipo;
 
-    public Paciente(int id, String nome, String tipo){
+    // O construtor não pede mais o 'tipo', pois um Paciente é sempre um Paciente.
+    public Paciente(int id, String nome){
         super(id, nome);
-        this.tipo = tipo;
     }
 
     @Override
     public String getTipo(){
-        return this.tipo;
+        return "Paciente"; 
     }
 }
