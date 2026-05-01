@@ -25,16 +25,4 @@ public class ValidadorDeDados {
         
         return false;
     }
-
-    public static boolean isCrmValido(String crm) {
-        if (crm == null || crm.trim().isEmpty()) {
-            return false;
-        }
-        
-        if (crm.length() >= 5) {
-            return true;
-        }
-        
-        return false;
-    }
 }
