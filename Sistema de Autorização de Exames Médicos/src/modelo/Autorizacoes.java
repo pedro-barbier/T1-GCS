@@ -1,0 +1,49 @@
+package modelo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Autorizacoes {
+    private List<AutorizacaoExame> autorizacoes = new ArrayList<>();
+
+    public void adicionarAutorizacao(AutorizacaoExame autorizacao) {
+        this.autorizacoes.add(autorizacao);
+    }
+
+    public List<AutorizacaoExame> buscarPorCodigo(int codigo) {
+        return null;
+    }
+
+    public List<AutorizacaoExame> buscarPorPaciente(Paciente paciente) {
+        return null;
+    }
+
+    public List<AutorizacaoExame> filtrarPorPaciente(Paciente paciente) {
+        return null;
+    }
+
+    public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
+        return null;
+    }
+
+    public List<AutorizacaoExame> filtrarPorMedico(Medico medico) {
+        return null;
+    }
+
+    public int contarAutorizacoes() {
+        return this.autorizacoes.size();
+    }
+
+    public double percentualRealizados() {
+        return 0.0;
+    }
+
+    public List<AutorizacaoExame> getAutorizacoes() {
+        List<AutorizacaoExame> temp = new ArrayList<>();
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+            temp.add(autorizacao);
+        }
+        return temp;
+    }
+
+}
