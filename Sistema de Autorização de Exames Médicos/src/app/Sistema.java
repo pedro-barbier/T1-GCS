@@ -6,31 +6,92 @@ import java.util.Scanner;
 
 public class Sistema {
     private Scanner scanner = new Scanner(System.in);
-    private Usuarios usuarios = new Usuarios();
+    private Usuarios usuarios = new Usuarios(); // classe para gerenciar os usuários do sistema
     private Usuario usuarioAtual = null;
-    private Autorizacoes autorizacoes = new Autorizacoes();
+    private Autorizacoes autorizacoes = new Autorizacoes(); // classe para gerenciar as autorizações de exames
 
     public Sistema() {
         carregarDadosIniciais();
-    }
-
-    public void executar() {
         System.out.println("=== Sistema de Autorização de Exames ===");
-        while (true) {
-            System.out.println("\nUsuário atual: " 
-                + (usuarioAtual != null ? usuarioAtual : "Nenhum"));
-            System.out.println("1 - Selecionar usuário");
-            System.out.println("0 - Sair");
-            
-
-            System.out.print("Opção: ");
-            String opcao = scanner.nextLine();
-            if (opcao.equals("0")) break;
-        }
-        
-
     }
 
+    /* Apresenta o menu de opções para o usuário.
+    As opções disponíveis dependem do tipo do usuário logado (administrador, médico ou paciente). */
+    public void menu() {
+        System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarioAtual : "Nenhum"));
+        System.out.println("[ 1 ] - Selecionar usuário");
+
+        switch (usuarioAtual != null ? usuarioAtual.getTipo() : "") {
+            case "Administrador":
+                System.out.println("[ 2 ] - Criar novo usuário");
+                System.out.println("[ 3 ] - Listar autorização de exames por paciente ou médico"); // deve ser possivel buscar por apenas parte do nome (usar startWith)
+                System.out.println("[ 4 ] - Estatísticas gerais do sistema");
+                break;
+            case "Paciente":
+                System.out.println("[ 2 ] - Marcar um exame como realizado");
+                System.out.println("[ 3 ] - Listar as suas autorizações de exame"); // deve ser em ordem de mais recente para mais antiga
+                break;
+            case "Médico":
+                System.out.println("[ 2 ] - Criar autorização");
+                System.out.println("[ 3 ] - Filtrar autorizações");
+                break;
+        }
+        System.out.println("[ 0 ] - Sair");
+        System.out.print("Opção: ");
+    }
+
+    /* Executa o sistema.
+    O sistema continua em execução até que o usuário escolha sair. */
+    public void executar() {
+        while (true) {
+            menu();
+
+            int opcao;
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Opção inválida. Tente novamente.");
+                continue;
+            }
+            
+            switch (opcao) {
+                case 0:
+                    System.out.println("Saindo...");
+                    return;
+                case 1:
+                    selecionarUsuario();
+                    continue;
+                case 2:
+                    break; // aplicar ações específicas para cada tipo de usuário
+                case 3:
+                    break; // aplicar ações específicas para cada tipo de usuário
+                case 4:
+                    break; // aplicar ações específicas para cada tipo de usuário
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        }
+    }
+
+    /* Seleciona um usuário do sistema.
+    O usuário é buscado pelo nome e definido como o usuário atual. */
+    private void selecionarUsuario() {
+        System.out.println("\n=== Selecionar Usuário ===");
+        System.out.print("Digite o Nome do usuário: ");
+        String nome = scanner.nextLine();
+
+        Usuario usuario = usuarios.buscarPorNome(nome);
+        if (usuario != null) {
+            System.out.println("Usuário selecionado: " + usuario);
+            usuarioAtual = usuario;
+        } else {
+            System.out.println("Usuário não encontrado. Tente novamente.");
+        }
+    }
+
+    /* Carrega dados iniciais para o sistema.
+    São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
     private void carregarDadosIniciais() {
         Administrador admin = new Administrador(1, "Cláudio");
         

@@ -10,11 +10,16 @@ public class Usuarios {
         this.usuarios.add(usuario);
     }
 
-    public List<Usuario> buscarPorID(int identificador) {
+    public Usuario buscarPorID(int identificador) {
         return null;
     }
 
-    public List<Usuario> buscarPorNome(String nome) {
+    public Usuario buscarPorNome(String nome) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNome().equals(nome)) {
+                return usuario;
+            }
+        }
         return null;
     }
 
