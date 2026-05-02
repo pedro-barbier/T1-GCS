@@ -32,15 +32,12 @@ public class Sistema {
     }
 
     private void carregarDadosIniciais() {
-        // Administrador só recebe ID e Nome
         Administrador admin = new Administrador(1, "Cláudio");
         
-        // Médicos recebem ID, Nome e um CRM válido!
-        Medico medico1 = new Medico(101, "Pedro", "CRM-RS 12345");
-        Medico medico2 = new Medico(102, "Maria", "CRM-SP 54321");
-        Medico medico3 = new Medico(103, "João", "CRM-RJ 98765");
+        Medico medico1 = new Medico(101, "Pedro");
+        Medico medico2 = new Medico(102, "Maria");
+        Medico medico3 = new Medico(103, "João");
         
-        // Pacientes recebem só ID e Nome (já que ainda não colocamos o CPF no construtor)
         Paciente paciente1 = new Paciente(1001, "Ana");
         Paciente paciente2 = new Paciente(1002, "Carlos");
         Paciente paciente3 = new Paciente(1003, "Beatriz");
@@ -57,8 +54,14 @@ public class Sistema {
         usuarios.adicionarUsuario(paciente4);
         usuarios.adicionarUsuario(paciente5);
 
-        // A parte das autorizações continua igualzinha!
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente1, TipoExame.RAIOX));
-        // ... (mantenha o resto das suas autorizações)
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente2, TipoExame.TOMOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente3, TipoExame.RESSONANCIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente4, TipoExame.ULTRASSONOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente5, TipoExame.ELETROCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente5, TipoExame.COLONOSCOPIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente1, TipoExame.ECOCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente3, TipoExame.ANGIOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente2, TipoExame.PUNCAO));
     }
 }
