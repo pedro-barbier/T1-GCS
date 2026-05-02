@@ -16,20 +16,13 @@ public class ValidadorDeDados {
         if (cpf == null || cpf.trim().isEmpty()) {
             return false;
         }
+        
         String cpfApenasNumeros = cpf.replace(".", "").replace("-", "");
+        
         if (cpfApenasNumeros.length() == 11) {
             return true;
         }
-        return false;
-    }
-
-    public static boolean isCrmValido(String crm) {
-        if (crm == null || crm.trim().isEmpty()) {
-            return false;
-        }
-        if (crm.length() >= 5) {
-            return true;
-        }
+        
         return false;
     }
 }
