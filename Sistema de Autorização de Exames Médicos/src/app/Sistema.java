@@ -12,13 +12,12 @@ public class Sistema {
 
     public Sistema() {
         carregarDadosIniciais();
+        System.out.println("=== Sistema de Autorização de Exames ===");
     }
 
     /* Apresenta o menu de opções para o usuário.
     As opções disponíveis dependem do tipo do usuário logado (administrador, médico ou paciente). */
     public void menu() {
-        System.out.println("=== Sistema de Autorização de Exames ===");
-
         System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarioAtual : "Nenhum"));
         System.out.println("[ 1 ] - Selecionar usuário");
 
@@ -32,12 +31,12 @@ public class Sistema {
                 System.out.println("[ 2 ] - Marcar um exame como realizado");
                 System.out.println("[ 3 ] - Listar as suas autorizações de exame"); // deve ser em ordem de mais recente para mais antiga
                 break;
-            case "Medico":
+            case "Médico":
                 System.out.println("[ 2 ] - Criar autorização");
                 System.out.println("[ 3 ] - Filtrar autorizações");
                 break;
         }
-        System.out.println("[-1 ] - Sair");
+        System.out.println("[ 0 ] - Sair");
         System.out.print("Opção: ");
     }
 
@@ -56,18 +55,18 @@ public class Sistema {
             }
             
             switch (opcao) {
-                case -1:
+                case 0:
                     System.out.println("Saindo...");
                     return;
                 case 1:
                     selecionarUsuario();
                     continue;
                 case 2:
-                    // aplicar ações específicas para cada tipo de usuário
+                    break; // aplicar ações específicas para cada tipo de usuário
                 case 3:
-                    // aplicar ações específicas para cada tipo de usuário
+                    break; // aplicar ações específicas para cada tipo de usuário
                 case 4:
-                    // aplicar ações específicas para cada tipo de usuário
+                    break; // aplicar ações específicas para cada tipo de usuário
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
