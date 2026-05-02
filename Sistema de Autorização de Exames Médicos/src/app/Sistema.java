@@ -32,15 +32,18 @@ public class Sistema {
     }
 
     private void carregarDadosIniciais() {
-        Administrador admin = new Administrador(01, "Cláudio", "Administrador");
-        Medico medico1 = new Medico(101, "Pedro", "Médico");
-        Medico medico2 = new Medico(102, "Maria", "Médico");
-        Medico medico3 = new Medico(103, "João", "Médico");
-        Paciente paciente1 = new Paciente(1001, "Ana", "Paciente");
-        Paciente paciente2 = new Paciente(1002, "Carlos", "Paciente");
-        Paciente paciente3 = new Paciente(1003, "Beatriz", "Paciente");
-        Paciente paciente4 = new Paciente(1004, "Lucas", "Paciente");
-        Paciente paciente5 = new Paciente(1005, "Fernanda", "Paciente");
+        Administrador admin = new Administrador(1, "Cláudio");
+        
+        Medico medico1 = new Medico(101, "Pedro");
+        Medico medico2 = new Medico(102, "Maria");
+        Medico medico3 = new Medico(103, "João");
+        
+        Paciente paciente1 = new Paciente(1001, "Ana");
+        Paciente paciente2 = new Paciente(1002, "Carlos");
+        Paciente paciente3 = new Paciente(1003, "Beatriz");
+        Paciente paciente4 = new Paciente(1004, "Lucas");
+        Paciente paciente5 = new Paciente(1005, "Fernanda");
+
         usuarios.adicionarUsuario(admin);
         usuarios.adicionarUsuario(medico1);
         usuarios.adicionarUsuario(medico2);
@@ -50,6 +53,7 @@ public class Sistema {
         usuarios.adicionarUsuario(paciente3);
         usuarios.adicionarUsuario(paciente4);
         usuarios.adicionarUsuario(paciente5);
+
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente1, TipoExame.RAIOX));
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente2, TipoExame.TOMOGRAFIA));
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente3, TipoExame.RESSONANCIA));

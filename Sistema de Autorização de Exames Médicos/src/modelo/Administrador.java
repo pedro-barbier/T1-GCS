@@ -1,15 +1,13 @@
 package modelo;
 
 public class Administrador extends Usuario {
-    private String tipo;
-
-    public Administrador(int id, String nome, String tipo){
-        super(id, nome);
-        this.tipo = tipo;
+    
+    public Administrador(int identificador, String nome) {
+        super(identificador, nome);
     }
 
     @Override
-    public String getTipo(){
-        return this.tipo;
+    public String getTipo() {
+        return "Administrador";
     }
 }

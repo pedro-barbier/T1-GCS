@@ -1,15 +1,13 @@
 package modelo;
 
 public class Medico extends Usuario {
-    private String tipo;
 
-    public Medico(int id, String nome, String tipo){
-        super(id, nome);
-        this.tipo = tipo;
+    public Medico(int identificador, String nome) {
+        super(identificador, nome);
     }
 
     @Override
-    public String getTipo(){
-        return this.tipo;
+    public String getTipo() {
+        return "Médico";
     }
 }
