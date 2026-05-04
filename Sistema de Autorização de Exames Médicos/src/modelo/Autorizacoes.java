@@ -11,23 +11,57 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> buscarPorCodigo(int codigo) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            if (a.getCodigo() == codigo) {
+                resultado.add(a);
+            }
+        }
+        return resultado;
     }
 
     public List<AutorizacaoExame> buscarPorPaciente(Paciente paciente) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            if (a.getPaciente().getIdentificador() == paciente.getIdentificador()) {
+                resultado.add(a);
+            }
+        }
+        return resultado;
     }
 
     public List<AutorizacaoExame> filtrarPorPaciente(Paciente paciente) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            String nomePaciente = a.getPaciente().getNome().toLowerCase();
+            String nomeBuscado = paciente.getNome().toLowerCase();
+            if (nomePaciente.startsWith(nomeBuscado)) {
+                resultado.add(a);
+            }
+        }
+        return resultado;
     }
 
     public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            if (a.getMedicoSolicitante().getIdentificador() == medico.getIdentificador()) {
+                resultado.add(a);
+            }
+        }
+        return resultado;
     }
 
     public List<AutorizacaoExame> filtrarPorMedico(Medico medico) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            String nomeMedico = a.getMedicoSolicitante().getNome().toLowerCase();
+            String nomeBuscado = medico.getNome().toLowerCase();
+            if (nomeMedico.startsWith(nomeBuscado)) {
+                resultado.add(a);
+            }
+        }
+        return resultado;
     }
 
     public int contarAutorizacoes() {
@@ -35,15 +69,26 @@ public class Autorizacoes {
     }
 
     public double percentualRealizados() {
-        return 0.0;
+        if (autorizacoes.isEmpty()) {
+            return 0.0;
+        }
+
+        int realizados = 0;
+        for (AutorizacaoExame a : autorizacoes) {
+            if (a.isRealizado()) {
+                realizados++;
+            }
+        }
+
+        return (realizados * 100.0) / autorizacoes.size();
     }
+
 
     public List<AutorizacaoExame> getAutorizacoes() {
-        List<AutorizacaoExame> temp = new ArrayList<>();
-        for (AutorizacaoExame autorizacao : autorizacoes) {
-            temp.add(autorizacao);
+        List<AutorizacaoExame> copia = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            copia.add(a);
         }
-        return temp;
+        return copia;
     }
-
 }
