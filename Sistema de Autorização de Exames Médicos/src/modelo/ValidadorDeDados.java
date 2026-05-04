@@ -6,35 +6,17 @@ public class ValidadorDeDados {
     }
 
     public static boolean isTextoValido(String texto) {
-        if (texto == null || texto.trim().isEmpty()) {
-            return false;
-        }
-        return true;
+        return texto != null && !texto.trim().isEmpty();
     }
 
-    public static boolean isCpfValido(String cpf) {
-        if (cpf == null || cpf.trim().isEmpty()) {
-            return false;
-        }
-        
-        String cpfApenasNumeros = cpf.replace(".", "").replace("-", "");
-        
-        if (cpfApenasNumeros.length() == 11) {
-            return true;
-        }
-        
-        return false;
+    public static boolean isIdentificadorValido(int identificador) {
+        return identificador > 0;
     }
 
-    public static boolean isCrmValido(String crm) {
-        if (crm == null || crm.trim().isEmpty()) {
+    public static boolean isNomeValido(String nome) {
+        if (!isTextoValido(nome)) {
             return false;
         }
-        
-        if (crm.length() >= 5) {
-            return true;
-        }
-        
-        return false;
+        return nome.trim().matches("[a-zA-ZÀ-ú ]+");
     }
 }
