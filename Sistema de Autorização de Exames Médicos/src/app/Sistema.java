@@ -97,10 +97,11 @@ public class Sistema {
     private void criarNovoUsuario(){
         int id;
         String tipo, nome; 
-        System.out.print("Deseja criar qual tipo de Usuário[Administrador, Medico, Paciente]: ");
+        System.out.print("Deseja criar qual tipo de Usuário[Administrador, Médico, Paciente]: ");
         tipo = scanner.nextLine();
         System.out.print("Id do novo Usuário: ");
         id = scanner.nextInt();
+        scanner.nextLine(); // limpa buffer
         System.out.print("Nome do novo Usuário: ");
         nome = scanner.nextLine();
         switch (tipo) {
