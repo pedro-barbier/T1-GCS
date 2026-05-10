@@ -47,6 +47,23 @@ public class Estatisticas {
 
     public static int contarUsuarios(List<Usuario> usuarios) {
 
-        return usuarios.sizee();
+        return usuarios.size();
+    }
+
+    public static double percentualExamesRealizados(List<AutorizacaoExame> autorizacoes) {
+        int realizados = 0;
+
+        for (AutorizacaoExame a : autorizacoes) {
+            
+            if (a.getDataRealizacao() != null) {
+                realizados++;
+            }
+        }
+
+        if (autorizacoes.isEmpty()) {
+            return 0;
+        }
+
+        return (realizados * 100.0) / autorizacoes.size();
     }
 }
