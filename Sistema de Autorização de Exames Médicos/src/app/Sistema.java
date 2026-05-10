@@ -64,6 +64,24 @@ public class Sistema {
                 case 2:
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 3:
+
+                    if (usuarioAtual instanceof Medico) {
+
+                        Medico medico = (Medico) usuarioAtual;
+
+                        System.out.println("\n=== AUTORIZAÇÕES DO MÉDICO ===");
+
+                        for (AutorizacaoExame autorizacao :
+                                autorizacoes.buscarPorMedico(medico)) {
+
+                            System.out.println(
+                               "Código: " + autorizacao.getCodigo()
+                                + " | Paciente: " + autorizacao.getPaciente().getNome()
+                                + " | Exame: " + autorizacao.getTipoExame()
+                            );
+                        }
+                    }
+                    
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 4:
 
