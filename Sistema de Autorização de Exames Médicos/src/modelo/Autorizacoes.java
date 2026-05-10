@@ -15,7 +15,17 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> buscarPorPaciente(Paciente paciente) {
-        return null;
+
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+
+            if (autorizacao.getPaciente().equals(paciente)) {
+                resultado.add(autorizacao);
+            }
+        }
+
+        return resultado;
     }
 
     public List<AutorizacaoExame> filtrarPorPaciente(Paciente paciente) {
@@ -23,7 +33,15 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+
+            if (autorizacao.getMedicoSolicitante().equals(medico)) {
+                resultado.add(autorizacao);
+            }
+        }
+        return resultado;
     }
 
     public List<AutorizacaoExame> filtrarPorMedico(Medico medico) {
