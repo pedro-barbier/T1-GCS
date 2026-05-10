@@ -44,4 +44,9 @@ public class Estatisticas {
 
         return total;
     }
+
+    public static int contarUsuarios(List<Usuario> usuarios) {
+
+        return usuarios.sizee();
+    }
 }
