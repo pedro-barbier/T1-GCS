@@ -26,6 +26,7 @@ public class Sistema {
                 System.out.println("[ 2 ] - Criar novo usuário");
                 System.out.println("[ 3 ] - Listar autorização de exames por paciente ou médico"); // deve ser possivel buscar por apenas parte do nome (usar startWith)
                 System.out.println("[ 4 ] - Estatísticas gerais do sistema");
+                System.out.println("[ 5 ] - Listar todos os usuários cadastrados no sistema.");
                 break;
             case "Paciente":
                 System.out.println("[ 2 ] - Marcar um exame como realizado");
@@ -67,6 +68,11 @@ public class Sistema {
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 4:
                     break; // aplicar ações específicas para cada tipo de usuário
+                case 5:
+                    if(usuarioAtual.getTipo() == "Administrador"){
+                        usuarios.listarTodosOsUsuariosCadastradosNoSistema();
+                    }
+                    break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
