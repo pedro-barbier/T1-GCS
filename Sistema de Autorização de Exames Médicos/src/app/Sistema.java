@@ -62,6 +62,9 @@ public class Sistema {
                     selecionarUsuario();
                     continue;
                 case 2:
+                    if (usuarioAtual.getTipo() == "Administrador"){
+                        criarNovoUsuario();
+                    }
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 3:
                     break; // aplicar ações específicas para cada tipo de usuário
@@ -89,6 +92,35 @@ public class Sistema {
             System.out.println("Usuário não encontrado. Tente novamente.");
         }
     }
+
+    // Como Administrador criar um novo usuario.
+    private void criarNovoUsuario(){
+        int id;
+        String tipo, nome; 
+        System.out.print("Deseja criar qual tipo de Usuário[Administrador, Medico, Paciente]: ");
+        tipo = scanner.nextLine();
+        System.out.print("Id do novo Usuário: ");
+        id = scanner.nextInt();
+        System.out.print("Nome do novo Usuário: ");
+        nome = scanner.nextLine();
+        switch (tipo) {
+            case "Administrador":
+                Administrador admin = new Administrador(id, nome);
+                usuarios.adicionarUsuario(admin);
+                break;
+            case "Paciente":
+                Paciente paciente = new Paciente(id, nome);
+                usuarios.adicionarUsuario(paciente);
+                break;
+            case "Médico":
+                Medico medico = new Medico(id, nome);
+                usuarios.adicionarUsuario(medico);
+                break;
+            default:
+                break;
+        }
+    }
+
 
     /* Carrega dados iniciais para o sistema.
     São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
