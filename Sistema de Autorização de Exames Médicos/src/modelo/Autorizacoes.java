@@ -38,7 +38,8 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> filtrarPorPaciente(Paciente paciente) {
-        return null;
+        
+        return buscarPorPaciente(paciente);
     }
 
     public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
@@ -54,7 +55,8 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> filtrarPorMedico(Medico medico) {
-        return null;
+        
+        return buscarPorMedico(medico);
     }
 
     public int contarAutorizacoes() {
