@@ -118,8 +118,11 @@ public class Sistema {
                 usuarios.adicionarUsuario(medico);
                 break;
             default:
-                break;
+                System.out.print("Usuário não foi criado. Tipo de usuário não existente");
+                return;
         }
+
+        System.out.print("Novo usuário criado: " + "Id:" + id + ", Nome:" + nome + ", Tipo:" + tipo);
     }
 
 
