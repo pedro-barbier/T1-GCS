@@ -18,7 +18,7 @@ public class Sistema {
     /* Apresenta o menu de opções para o usuário.
     As opções disponíveis dependem do tipo do usuário logado (administrador, médico ou paciente). */
     public void menu() {
-        System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarioAtual : "Nenhum"));
+        System.out.println("\nUsuário atual: " + (usuarioAtual != null ? descreveUsuario() : "Nenhum"));
         System.out.println("[ 1 ] - Selecionar usuário");
 
         switch (usuarioAtual != null ? usuarioAtual.getTipo() : "") {
@@ -89,6 +89,12 @@ public class Sistema {
             System.out.println("Usuário não encontrado. Tente novamente.");
         }
     }
+
+    // Retorna uma String descrevendo o Usuario Atual do sistema.
+    private String descreveUsuario(){
+        return "Id:" + usuarioAtual.getIdentificador() + ", Nome:" + usuarioAtual.getNome() + ", Tipo:" + usuarioAtual.getTipo();
+    }
+
 
     /* Carrega dados iniciais para o sistema.
     São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
