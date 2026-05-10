@@ -66,6 +66,24 @@ public class Sistema {
                 case 3:
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 4:
+
+                    System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
+
+                    System.out.println("Total de médicos: " +
+                        Estatisticas.contarMedicos(usuarios.getUsuarios()));
+
+                    System.out.println("Total de pacientes: " +
+                        Estatisticas.contarPacientes(usuarios.getUsuarios()));
+
+                    System.out.println("Total de administradores: " +
+                        Estatisticas.contarAdministradores(usuarios.getUsuarios()));
+
+                    System.out.println("Total de usuários: " +
+                        Estatisticas.contarUsuarios(usuarios.getUsuarios()));
+
+                    System.out.println("Percentual de exames realizados: " +
+                        Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
+                    
                     break; // aplicar ações específicas para cada tipo de usuário
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
