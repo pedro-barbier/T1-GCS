@@ -30,4 +30,18 @@ public class Estatisticas {
 
         return total;
     }
+
+    public static int contarAdministradores(List<Usuario> usuarios) {
+
+        int total = 0;
+
+        for (Usuario u : usuarios) {
+
+            if (u instanceof Administrador) {
+                total++;
+            }
+        }
+
+        return total;
+    }
 }
