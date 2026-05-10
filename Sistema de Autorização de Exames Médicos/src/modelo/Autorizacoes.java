@@ -11,7 +11,16 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> buscarPorCodigo(int codigo) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+
+            if (autorizacao.getCodigo() == codigo) {
+                resultado.add(autorizacao);
+            }
+        }
+
+        return resultado;
     }
 
     public List<AutorizacaoExame> buscarPorPaciente(Paciente paciente) {
