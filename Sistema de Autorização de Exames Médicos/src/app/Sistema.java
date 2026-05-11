@@ -68,48 +68,13 @@ public class Sistema {
                     }
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 3:
-
                     if (usuarioAtual instanceof Medico) {
-
-                        Medico medico = (Medico) usuarioAtual;
-
-                        System.out.println("\n=== AUTORIZAÇÕES DO MÉDICO ===");
-
-                        for (AutorizacaoExame autorizacao :
-                                autorizacoes.buscarPorMedico(medico)) {
-
-                            System.out.println(
-                               "Código: " + autorizacao.getCodigo()
-                                + " | Paciente: " + autorizacao.getPaciente().getNome()
-                                + " | Exame: " + autorizacao.getTipoExame()
-                            );
-                        }
-
-                        // falta implementar filtragem por paciente ou tipo de exame, de acordo com enunciado
+                        filtraAutorizacoes();
                     }
                     
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 4:
-
-                    System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
-
-                    System.out.println("Total de médicos: " +
-                        Estatisticas.contarMedicos(usuarios.getUsuarios()));
-
-                    System.out.println("Total de pacientes: " +
-                        Estatisticas.contarPacientes(usuarios.getUsuarios()));
-
-                    System.out.println("Total de administradores: " +
-                        Estatisticas.contarAdministradores(usuarios.getUsuarios()));
-
-                    System.out.println("Total de usuários: " +
-                        Estatisticas.contarUsuarios(usuarios.getUsuarios()));
-
-                    // aplicar total de autorizações emitidas que está faltando, de acordo com enunciado
-
-                    System.out.println("Percentual de exames realizados: " +
-                        Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
-                    
+                    mostrarEstatisticasDoSistema();
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 5:
                     if(usuarioAtual.getTipo() == "Administrador"){
@@ -188,6 +153,47 @@ public class Sistema {
             default:
                 return null;
         }
+    }
+
+
+    private void filtraAutorizacoes(){
+        Medico medico = (Medico) usuarioAtual;
+
+        System.out.println("\n=== AUTORIZAÇÕES DO MÉDICO ===");
+
+        for (AutorizacaoExame autorizacao :
+                autorizacoes.buscarPorMedico(medico)) {
+
+            System.out.println(
+                "Código: " + autorizacao.getCodigo()
+                + " | Paciente: " + autorizacao.getPaciente().getNome()
+                + " | Exame: " + autorizacao.getTipoExame()
+            );
+        }
+
+        // falta implementar filtragem por paciente ou tipo de exame, de acordo com enunciado
+    }
+
+
+    private void mostrarEstatisticasDoSistema(){
+        System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
+
+        System.out.println("Total de médicos: " +
+            Estatisticas.contarMedicos(usuarios.getUsuarios()));
+
+        System.out.println("Total de pacientes: " +
+            Estatisticas.contarPacientes(usuarios.getUsuarios()));
+
+        System.out.println("Total de administradores: " +
+            Estatisticas.contarAdministradores(usuarios.getUsuarios()));
+
+        System.out.println("Total de usuários: " +
+            Estatisticas.contarUsuarios(usuarios.getUsuarios()));
+
+        // aplicar total de autorizações emitidas que está faltando, de acordo com enunciado
+
+        System.out.println("Percentual de exames realizados: " +
+            Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
     }
 
 
