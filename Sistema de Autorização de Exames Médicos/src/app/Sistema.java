@@ -143,7 +143,7 @@ public class Sistema {
                     
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 5:
-                    if(usuarioAtual.getTipo().equals("Administrador"))
+                    if(usuarioAtual.getTipo().equals("Administrador")) {
                         usuarios.listarTodosOsUsuariosCadastradosNoSistema();
                     }
                     break;
