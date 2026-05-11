@@ -11,23 +11,52 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> buscarPorCodigo(int codigo) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+
+            if (autorizacao.getCodigo() == codigo) {
+                resultado.add(autorizacao);
+            }
+        }
+
+        return resultado;
     }
 
     public List<AutorizacaoExame> buscarPorPaciente(Paciente paciente) {
-        return null;
+
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+
+            if (autorizacao.getPaciente().equals(paciente)) {
+                resultado.add(autorizacao);
+            }
+        }
+
+        return resultado;
     }
 
     public List<AutorizacaoExame> filtrarPorPaciente(Paciente paciente) {
-        return null;
+        
+        return buscarPorPaciente(paciente);
     }
 
     public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
-        return null;
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+
+            if (autorizacao.getMedicoSolicitante().equals(medico)) {
+                resultado.add(autorizacao);
+            }
+        }
+        return resultado;
     }
 
     public List<AutorizacaoExame> filtrarPorMedico(Medico medico) {
-        return null;
+        
+        return buscarPorMedico(medico);
     }
 
     public int contarAutorizacoes() {
@@ -35,7 +64,21 @@ public class Autorizacoes {
     }
 
     public double percentualRealizados() {
-        return 0.0;
+
+        int realizados = 0;
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+
+            if (autorizacao.isRealizado()) {
+                realizados++;
+            }
+        }
+
+        if (autorizacoes.isEmpty()) {
+            return 0.0;
+        }
+
+        return (realizados * 100.0) / autorizacoes.size();
     }
 
     public List<AutorizacaoExame> getAutorizacoes() {

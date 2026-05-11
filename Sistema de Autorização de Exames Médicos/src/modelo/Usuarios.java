@@ -11,6 +11,14 @@ public class Usuarios {
     }
 
     public Usuario buscarPorID(int identificador) {
+
+        for (Usuario usuario : usuarios){
+
+            if (usuario.getIdentificador() == identificador) {
+                return usuario;
+            }
+        }
+        
         return null;
     }
 
