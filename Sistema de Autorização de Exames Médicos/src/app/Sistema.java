@@ -63,7 +63,7 @@ public class Sistema {
                     selecionarUsuario();
                     continue;
                 case 2:
-                    if (usuarioAtual.getTipo() == "Administrador"){
+                    if (usuarioAtual instanceof Administrador){
                         criarNovoUsuario();
                     }
                     break; // aplicar ações específicas para cada tipo de usuário
@@ -74,10 +74,12 @@ public class Sistema {
                     
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 4:
-                    mostrarEstatisticasDoSistema();
+                    if (usuarioAtual instanceof Administrador){
+                        mostrarEstatisticasDoSistema();
+                    }
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 5:
-                    if(usuarioAtual.getTipo() == "Administrador"){
+                    if(usuarioAtual instanceof Administrador){
                         usuarios.listarTodosOsUsuariosCadastradosNoSistema();
                     }
                     break;
