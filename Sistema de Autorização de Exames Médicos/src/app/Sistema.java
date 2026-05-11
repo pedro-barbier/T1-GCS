@@ -105,6 +105,9 @@ public class Sistema {
                     System.out.println("Total de usuários: " +
                         Estatisticas.contarUsuarios(usuarios.getUsuarios()));
 
+                    System.out.println("Total de autorizações: " +
+                        autorizacoes.contarAutorizacoes());
+
                     // aplicar total de autorizações emitidas que está faltando, de acordo com enunciado
 
                     System.out.println("Percentual de exames realizados: " +
