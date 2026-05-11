@@ -18,7 +18,7 @@ public class Sistema {
     /* Apresenta o menu de opções para o usuário.
     As opções disponíveis dependem do tipo do usuário logado (administrador, médico ou paciente). */
     public void menu() {
-        System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarios.descreveUsuario(usuarioAtual) : "Nenhum"));
+        System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarioAtual.toString() : "Nenhum"));
         System.out.println("[ 1 ] - Selecionar usuário");
 
         switch (usuarioAtual != null ? usuarioAtual.getTipo() : "") {
@@ -132,7 +132,7 @@ public class Sistema {
 
         Usuario usuario = usuarios.buscarPorNome(nome);
         if (usuario != null) {
-            System.out.println("Usuário selecionado: " + usuarios.descreveUsuario(usuario));
+            System.out.println("Usuário selecionado: " + usuario.toString());
             usuarioAtual = usuario;
         } else {
             System.out.println("Usuário não encontrado. Tente novamente.");
