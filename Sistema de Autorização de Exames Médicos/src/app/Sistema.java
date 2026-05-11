@@ -165,6 +165,7 @@ public class Sistema {
         try {
             int id = scanner.nextInt();
             scanner.nextLine(); // limpa buffer
+            if(usuarios.buscarPorID(id) != null){return null;}
             return id;
         } catch (Exception e) {
             scanner.nextLine(); // limpa buffer
