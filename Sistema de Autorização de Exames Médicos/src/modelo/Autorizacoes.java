@@ -34,6 +34,9 @@ public class Autorizacoes {
             }
         }
 
+        resultado.sort((a1, a2) ->
+            a2.getDataCadastro().compareTo(a1.getDataCadastro()));
+
         return resultado;
     }
 
@@ -43,6 +46,7 @@ public class Autorizacoes {
     }
 
     public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
+
         List<AutorizacaoExame> resultado = new ArrayList<>();
 
         for (AutorizacaoExame autorizacao : autorizacoes) {
@@ -51,6 +55,10 @@ public class Autorizacoes {
                 resultado.add(autorizacao);
             }
         }
+
+        resultado.sort((a1, a2) ->
+            a2.getDataCadastro().compareTo(a1.getDataCadastro()));
+
         return resultado;
     }
 
@@ -70,6 +78,9 @@ public class Autorizacoes {
                 resultado.add(autorizacao);
             }
         }
+
+        resultado.sort((a1, a2) ->
+            a2.getDataCadastro().compareTo(a1.getDataCadastro()));
 
         return resultado;
     }
