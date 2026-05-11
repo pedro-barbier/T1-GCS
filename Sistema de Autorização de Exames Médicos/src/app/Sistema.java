@@ -18,7 +18,7 @@ public class Sistema {
     /* Apresenta o menu de opções para o usuário.
     As opções disponíveis dependem do tipo do usuário logado (administrador, médico ou paciente). */
     public void menu() {
-        System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarioAtual : "Nenhum"));
+        System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarios.descreveUsuario(usuarioAtual) : "Nenhum"));
         System.out.println("[ 1 ] - Selecionar usuário");
 
         switch (usuarioAtual != null ? usuarioAtual.getTipo() : "") {
@@ -63,10 +63,53 @@ public class Sistema {
                     selecionarUsuario();
                     continue;
                 case 2:
+                    if (usuarioAtual.getTipo() == "Administrador"){
+                        criarNovoUsuario();
+                    }
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 3:
+
+                    if (usuarioAtual instanceof Medico) {
+
+                        Medico medico = (Medico) usuarioAtual;
+
+                        System.out.println("\n=== AUTORIZAÇÕES DO MÉDICO ===");
+
+                        for (AutorizacaoExame autorizacao :
+                                autorizacoes.buscarPorMedico(medico)) {
+
+                            System.out.println(
+                               "Código: " + autorizacao.getCodigo()
+                                + " | Paciente: " + autorizacao.getPaciente().getNome()
+                                + " | Exame: " + autorizacao.getTipoExame()
+                            );
+                        }
+
+                        // falta implementar filtragem por paciente ou tipo de exame, de acordo com enunciado
+                    }
+                    
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 4:
+
+                    System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
+
+                    System.out.println("Total de médicos: " +
+                        Estatisticas.contarMedicos(usuarios.getUsuarios()));
+
+                    System.out.println("Total de pacientes: " +
+                        Estatisticas.contarPacientes(usuarios.getUsuarios()));
+
+                    System.out.println("Total de administradores: " +
+                        Estatisticas.contarAdministradores(usuarios.getUsuarios()));
+
+                    System.out.println("Total de usuários: " +
+                        Estatisticas.contarUsuarios(usuarios.getUsuarios()));
+
+                    // aplicar total de autorizações emitidas que está faltando, de acordo com enunciado
+
+                    System.out.println("Percentual de exames realizados: " +
+                        Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
+                    
                     break; // aplicar ações específicas para cada tipo de usuário
                 case 5:
                     if(usuarioAtual.getTipo() == "Administrador"){
@@ -89,12 +132,53 @@ public class Sistema {
 
         Usuario usuario = usuarios.buscarPorNome(nome);
         if (usuario != null) {
-            System.out.println("Usuário selecionado: " + usuario);
+            System.out.println("Usuário selecionado: " + usuarios.descreveUsuario(usuario));
             usuarioAtual = usuario;
         } else {
             System.out.println("Usuário não encontrado. Tente novamente.");
         }
     }
+
+    // Como Administrador criar um novo usuario.
+    private void criarNovoUsuario(){
+        int id;
+        String tipo, nome; 
+        System.out.print("\nDeseja criar qual tipo de Usuário[Administrador, Médico, Paciente]: ");
+        tipo = scanner.nextLine();
+        System.out.print("Id do novo Usuário: ");
+        try{
+            id = scanner.nextInt();
+            scanner.nextLine(); // limpa buffer
+        }
+        catch(Exception e){
+            scanner.nextLine(); // limpa buffer
+            System.out.print("Erro: Id deve ser composto de apenas números.\n");
+            return;
+        }
+
+        System.out.print("Nome do novo Usuário: ");
+        nome = scanner.nextLine();
+        switch (tipo) {
+            case "Administrador":
+                Administrador admin = new Administrador(id, nome);
+                usuarios.adicionarUsuario(admin);
+                break;
+            case "Paciente":
+                Paciente paciente = new Paciente(id, nome);
+                usuarios.adicionarUsuario(paciente);
+                break;
+            case "Médico":
+                Medico medico = new Medico(id, nome);
+                usuarios.adicionarUsuario(medico);
+                break;
+            default:
+                System.out.print("Usuário não foi criado. Tipo de usuário não existente.\n");
+                return;
+        }
+
+        System.out.print("Novo usuário criado: " + "Id:" + id + ", Nome:" + nome + ", Tipo:" + tipo + "\n");
+    }
+
 
     /* Carrega dados iniciais para o sistema.
     São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */

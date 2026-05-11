@@ -27,4 +27,9 @@ public abstract class Usuario {
     }
 
     public abstract String getTipo();
+
+    @Override
+    public String toString() {
+        return nome + " (" + getTipo() + ")";
+    }
 }

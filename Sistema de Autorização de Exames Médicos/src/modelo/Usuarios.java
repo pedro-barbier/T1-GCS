@@ -11,6 +11,14 @@ public class Usuarios {
     }
 
     public Usuario buscarPorID(int identificador) {
+
+        for (Usuario usuario : usuarios){
+
+            if (usuario.getIdentificador() == identificador) {
+                return usuario;
+            }
+        }
+        
         return null;
     }
 
@@ -67,4 +75,8 @@ public class Usuarios {
             System.out.println("\n");
         }
     }
+    public String descreveUsuario(Usuario usuario){
+        return "Id:" + usuario.getIdentificador() + ", Nome:" + usuario.getNome() + ", Tipo:" + usuario.getTipo();
+    }
+
 }
