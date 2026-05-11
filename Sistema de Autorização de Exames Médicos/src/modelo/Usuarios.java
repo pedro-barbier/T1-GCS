@@ -61,20 +61,23 @@ public class Usuarios {
         System.out.println("\nUsuarios Cadastrados no Sistema:");
         System.out.println("Administrador:");
         for (Usuario usuario : administradores){
-            //descreveUsuario(usuario);
-            System.out.println("\n");
+            System.out.println(descreveUsuario(usuario));
         }
+        System.out.println();
+
         System.out.println("Paciente:");
         for (Usuario usuario : pacientes){
-            //descreveUsuario(usuario);
-            System.out.println("\n");
+            System.out.println(descreveUsuario(usuario));
         }
+        System.out.println();
+
         System.out.println("Médicos:");
         for (Usuario usuario : medicos){
-            //descreveUsuario(usuario);
-            System.out.println("\n");
+            System.out.println(descreveUsuario(usuario));
         }
+
     }
+
     public String descreveUsuario(Usuario usuario){
         return "Id:" + usuario.getIdentificador() + ", Nome:" + usuario.getNome() + ", Tipo:" + usuario.getTipo();
     }
