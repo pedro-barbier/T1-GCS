@@ -39,6 +39,9 @@ public class Usuarios {
         return temp;
     }
 
+    public String descreveUsuario(Usuario usuario){
+        return "Id:" + usuario.getIdentificador() + ", Nome:" + usuario.getNome() + ", Tipo:" + usuario.getTipo();
+    }
 
     public void listarTodosOsUsuariosCadastradosNoSistema(){
         List<Usuario> administradores = new ArrayList<>();
@@ -59,7 +62,7 @@ public class Usuarios {
         }
 
         System.out.println("\nUsuarios Cadastrados no Sistema:");
-        System.out.println("Administrador:");
+        System.out.println("Administradores:");
         for (Usuario usuario : administradores){
             System.out.println(descreveUsuario(usuario));
         }
@@ -76,10 +79,6 @@ public class Usuarios {
             System.out.println(descreveUsuario(usuario));
         }
 
-    }
-
-    public String descreveUsuario(Usuario usuario){
-        return "Id:" + usuario.getIdentificador() + ", Nome:" + usuario.getNome() + ", Tipo:" + usuario.getTipo();
     }
 
 }

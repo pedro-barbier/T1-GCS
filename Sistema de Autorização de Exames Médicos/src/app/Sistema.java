@@ -140,43 +140,54 @@ public class Sistema {
     }
 
     // Como Administrador criar um novo usuario.
-    private void criarNovoUsuario(){
-        int id;
-        String tipo, nome; 
-        System.out.print("\nDeseja criar qual tipo de Usuário[Administrador, Médico, Paciente]: ");
-        tipo = scanner.nextLine();
-        System.out.print("Id do novo Usuário: ");
-        try{
-            id = scanner.nextInt();
-            scanner.nextLine(); // limpa buffer
-        }
-        catch(Exception e){
-            scanner.nextLine(); // limpa buffer
-            System.out.print("Erro: Id deve ser composto de apenas números.\n");
-            return;
-        }
+    private void criarNovoUsuario() {
+        System.out.print("\nDeseja criar qual tipo de Usuário [Administrador, Médico, Paciente]: ");
+        String tipo = scanner.nextLine().trim();
+
+        Integer id = lerIdUsuario();
+        if (id == null) {return;}
 
         System.out.print("Nome do novo Usuário: ");
-        nome = scanner.nextLine();
-        switch (tipo) {
-            case "Administrador":
-                Administrador admin = new Administrador(id, nome);
-                usuarios.adicionarUsuario(admin);
-                break;
-            case "Paciente":
-                Paciente paciente = new Paciente(id, nome);
-                usuarios.adicionarUsuario(paciente);
-                break;
-            case "Médico":
-                Medico medico = new Medico(id, nome);
-                usuarios.adicionarUsuario(medico);
-                break;
-            default:
-                System.out.print("Usuário não foi criado. Tipo de usuário não existente.\n");
-                return;
-        }
+        String nome = scanner.nextLine().trim();
 
-        System.out.print("Novo usuário criado: " + "Id:" + id + ", Nome:" + nome + ", Tipo:" + tipo + "\n");
+        Usuario usuario = criarUsuario(tipo, id, nome);
+        if (usuario == null) {
+            System.out.println("Usuário não foi criado. Tipo de usuário não existente.");
+            return;
+        }
+        usuarios.adicionarUsuario(usuario);
+
+        System.out.printf("Novo usuário criado: " + usuarios.descreveUsuario(usuario) + "\n");
+    }
+
+    private Integer lerIdUsuario() {
+        System.out.print("Id do novo Usuário: ");
+        try {
+            int id = scanner.nextInt();
+            scanner.nextLine(); // limpa buffer
+            return id;
+        } catch (Exception e) {
+            scanner.nextLine(); // limpa buffer
+            System.out.println("Erro: Id deve ser composto apenas por números.");
+            return null;
+        }
+    }
+
+    private Usuario criarUsuario(String tipo, int id, String nome) {
+        switch (tipo.toLowerCase()) {
+            case "administrador":
+                return new Administrador(id, nome);
+
+            case "paciente":
+                return new Paciente(id, nome);
+
+            case "médico":
+            case "medico":
+                return new Medico(id, nome);
+
+            default:
+                return null;
+        }
     }
 
 
