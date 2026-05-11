@@ -67,19 +67,22 @@ public class Usuarios {
             System.out.println(descreveUsuario(usuario));
         }
         System.out.println();
-        System.out.println("Pacientes:");
+
+        System.out.println("Paciente:");
         for (Usuario usuario : pacientes){
             System.out.println(descreveUsuario(usuario));
-            
         }
         System.out.println();
+
         System.out.println("Médicos:");
         for (Usuario usuario : medicos){
             System.out.println(descreveUsuario(usuario));
-            
         }
-        System.out.println();
+
     }
 
+    public String descreveUsuario(Usuario usuario){
+        return "Id:" + usuario.getIdentificador() + ", Nome:" + usuario.getNome() + ", Tipo:" + usuario.getTipo();
+    }
 
 }
