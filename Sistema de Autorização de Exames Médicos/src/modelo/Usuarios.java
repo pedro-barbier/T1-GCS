@@ -81,8 +81,4 @@ public class Usuarios {
 
     }
 
-    public String descreveUsuario(Usuario usuario){
-        return "Id:" + usuario.getIdentificador() + ", Nome:" + usuario.getNome() + ", Tipo:" + usuario.getTipo();
-    }
-
 }
