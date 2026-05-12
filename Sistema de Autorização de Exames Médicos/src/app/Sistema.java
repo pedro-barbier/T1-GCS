@@ -4,6 +4,7 @@ import modelo.*;
 
 import java.util.Scanner;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Sistema {
     private Scanner scanner = new Scanner(System.in);
@@ -270,14 +271,14 @@ public class Sistema {
         usuarios.adicionarUsuario(paciente4);
         usuarios.adicionarUsuario(paciente5);
 
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente1, TipoExame.RAIOX));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente2, TipoExame.TOMOGRAFIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente3, TipoExame.RESSONANCIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente4, TipoExame.ULTRASSONOGRAFIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente5, TipoExame.ELETROCARDIOGRAMA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente5, TipoExame.COLONOSCOPIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente1, TipoExame.ECOCARDIOGRAMA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente3, TipoExame.ANGIOGRAFIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente2, TipoExame.PUNCAO));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 1, 21) ,medico1, paciente1, TipoExame.RAIOX));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2, 15), medico2, paciente2, TipoExame.TOMOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 3, 10), medico3, paciente3, TipoExame.RESSONANCIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 3, 5), medico1, paciente4, TipoExame.ULTRASSONOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2, 12), medico2, paciente5, TipoExame.ELETROCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 10, 18), medico1, paciente5, TipoExame.COLONOSCOPIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 4, 22), medico3, paciente1, TipoExame.ECOCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 5, 11), medico2, paciente3, TipoExame.ANGIOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 12, 15), medico3, paciente2, TipoExame.PUNCAO));
     }
 }
