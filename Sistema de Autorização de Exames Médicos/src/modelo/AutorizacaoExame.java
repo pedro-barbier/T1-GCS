@@ -11,10 +11,10 @@ public class AutorizacaoExame {
     private LocalDate dataRealizacao;
     private static int contadorCodigo = 1000;
 
-    public AutorizacaoExame(Medico medico, Paciente paciente, TipoExame tipoExame) {
+    public AutorizacaoExame(LocalDate data, Medico medico, Paciente paciente, TipoExame tipoExame) {
         this.codigo = contadorCodigo;
         contadorCodigo++;
-        this.dataCadastro = LocalDate.now();
+        this.dataCadastro = data;
         this.medicoSolicitante = medico;
         this.paciente = paciente;
         this.tipoExame = tipoExame;
