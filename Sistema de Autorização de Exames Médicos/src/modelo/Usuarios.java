@@ -30,7 +30,15 @@ public class Usuarios {
         }
         return null;
     }
-
+    public List<Usuario> buscarPorParteDoNome(String parte) {
+    List<Usuario> resultado = new ArrayList<>();
+    for (Usuario usuario : usuarios) {
+        if (usuario.getNome().toLowerCase().contains(parte.toLowerCase())) {
+            resultado.add(usuario);
+        }
+    }
+    return resultado;
+}
     public List<Usuario> getUsuarios() {
         List<Usuario> temp = new ArrayList<>();
         for (Usuario usuario : usuarios) {
