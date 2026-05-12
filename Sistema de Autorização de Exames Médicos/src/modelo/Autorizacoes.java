@@ -88,7 +88,8 @@ public class Autorizacoes {
         }
         return temp;
     }
-        public boolean marcarComoRealizado(int codigo, Paciente paciente, java.time.LocalDate dataRealizacao) {
+        
+    public boolean marcarComoRealizado(int codigo, Paciente paciente, java.time.LocalDate dataRealizacao) {
 
         List<AutorizacaoExame> encontradas = buscarPorCodigo(codigo);
 

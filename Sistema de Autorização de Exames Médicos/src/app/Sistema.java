@@ -8,15 +8,17 @@ import java.time.LocalDate;
 
 public class Sistema {
     private Scanner scanner = new Scanner(System.in);
-    private Usuarios usuarios = new Usuarios();
+    private Usuarios usuarios = new Usuarios(); // classe para gerenciar os usuários do sistema
     private Usuario usuarioAtual = null;
-    private Autorizacoes autorizacoes = new Autorizacoes();
+    private Autorizacoes autorizacoes = new Autorizacoes(); // classe para gerenciar as autorizações de exames
 
     public Sistema() {
         carregarDadosIniciais();
         System.out.println("=== Sistema de Autorização de Exames ===");
     }
 
+    /* Apresenta o menu de opções para o usuário.
+    As opções disponíveis dependem do tipo do usuário logado (administrador, médico ou paciente). */
     public void menu() {
         System.out.println("\nUsuário atual: " + (usuarioAtual != null ? usuarioAtual.toString() : "Nenhum"));
         System.out.println("[ 1 ] - Selecionar usuário");
@@ -24,13 +26,13 @@ public class Sistema {
         switch (usuarioAtual != null ? usuarioAtual.getTipo() : "") {
             case "Administrador":
                 System.out.println("[ 2 ] - Criar novo usuário");
-                System.out.println("[ 3 ] - Listar autorização de exames por paciente ou médico");
+                System.out.println("[ 3 ] - Listar autorização de exames por paciente ou médico"); // deve ser possivel buscar por apenas parte do nome (usar startWith)
                 System.out.println("[ 4 ] - Estatísticas gerais do sistema");
                 System.out.println("[ 5 ] - Listar todos os usuários cadastrados no sistema.");
                 break;
             case "Paciente":
                 System.out.println("[ 2 ] - Marcar um exame como realizado");
-                System.out.println("[ 3 ] - Listar as suas autorizações de exame");
+                System.out.println("[ 3 ] - Listar as suas autorizações de exame"); // deve ser em ordem de mais recente para mais antiga
                 break;
             case "Médico":
                 System.out.println("[ 2 ] - Criar autorização");
@@ -42,6 +44,8 @@ public class Sistema {
         System.out.print("Opção: ");
     }
 
+    /* Executa o sistema.
+    O sistema continua em execução até que o usuário escolha sair. */
     public void executar() {
         while (true) {
             menu();
@@ -59,30 +63,30 @@ public class Sistema {
                     System.out.println("Saindo...");
                     return;
                 case 1:
-                    selecionarUsuario();
+                    selecionarUsuario(); // Feature feita por Pedro Barbieri
                     continue;
                 case 2:
                     if (usuarioAtual instanceof Administrador) {
-                        criarNovoUsuario();
+                        criarNovoUsuario(); // Feature feita por Luiz Felipe
                     } else if (usuarioAtual instanceof Paciente) {
-                        marcarExameComoRealizado();
+                        marcarExameComoRealizado(); // Feature feita por Lucas Mocelin e Eduardo Hoffmann
                     }
                     break;
                 case 3:
                     if (usuarioAtual instanceof Medico) {
-                        filtraAutorizacoes();
+                        filtraAutorizacoes(); // Feature feita por Henrique Rolim
                     } else if (usuarioAtual instanceof Paciente) {
-                        listarAutorizacoesPaciente();
+                        listarAutorizacoesPaciente(); // Feature feita por Lucas Mocelin, Eduardo Hoffmann e Letícia
                     }
                     break;
                 case 4:
                     if (usuarioAtual instanceof Administrador) {
-                        mostrarEstatisticasDoSistema();
+                        mostrarEstatisticasDoSistema(); // Feature feita por Henrique Rolim
                     }
                     break;
                 case 5:
                     if (usuarioAtual instanceof Administrador) {
-                        usuarios.listarTodosOsUsuariosCadastradosNoSistema();
+                        usuarios.listarTodosOsUsuariosCadastradosNoSistema(); // Feature feita por Luiz Felipe
                     }
                     break;
                 default:
@@ -92,6 +96,8 @@ public class Sistema {
         }
     }
 
+    /* Seleciona um usuário do sistema.
+    O usuário é buscado pelo nome e definido como o usuário atual. */
     private void selecionarUsuario() {
         System.out.println("\n=== Selecionar Usuário ===");
         System.out.print("Digite o Nome do usuário: ");
@@ -106,6 +112,7 @@ public class Sistema {
         }
     }
 
+    // Como Administrador criar um novo usuario.
     private void criarNovoUsuario() {
         System.out.print("\nDeseja criar qual tipo de Usuário [Administrador, Médico, Paciente]: ");
         String tipo = scanner.nextLine().trim();
@@ -168,6 +175,8 @@ public class Sistema {
                 + " | Exame: " + autorizacao.getTipoExame()
             );
         }
+
+        // falta implementar filtragem por paciente ou tipo de exame, de acordo com enunciado
     }
 
     private void mostrarEstatisticasDoSistema() {
@@ -184,6 +193,8 @@ public class Sistema {
 
         System.out.println("Total de usuários: " +
             Estatisticas.contarUsuarios(usuarios.getUsuarios()));
+
+        // aplicar total de autorizações emitidas que está faltando, de acordo com enunciado
 
         System.out.println("Percentual de exames realizados: " +
             Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
@@ -248,6 +259,8 @@ public class Sistema {
         }
     }
 
+    /* Carrega dados iniciais para o sistema.
+    São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
     private void carregarDadosIniciais() {
         Administrador admin = new Administrador(1, "Cláudio");
 
