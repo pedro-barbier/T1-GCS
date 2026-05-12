@@ -3,6 +3,7 @@ package app;
 import modelo.*;
 
 import java.util.Scanner;
+import java.util.List;
 import java.time.LocalDate;
 
 public class Sistema {
@@ -38,6 +39,7 @@ public class Sistema {
                 System.out.println("[ 3 ] - Filtrar autorizações");
                 break;
         }
+
         System.out.println("[ 0 ] - Sair");
         System.out.print("Opção: ");
     }
@@ -55,33 +57,36 @@ public class Sistema {
                 System.out.println("Opção inválida. Tente novamente.");
                 continue;
             }
-            
+
             switch (opcao) {
                 case 0:
                     System.out.println("Saindo...");
                     return;
                 case 1:
-                    selecionarUsuario();
+                    selecionarUsuario(); // Feature feita por Pedro Barbieri
                     continue;
                 case 2:
-                    if (usuarioAtual instanceof Administrador){
-                        criarNovoUsuario();
+                    if (usuarioAtual instanceof Administrador) {
+                        criarNovoUsuario(); // Feature feita por Luiz Felipe
+                    } else if (usuarioAtual instanceof Paciente) {
+                        marcarExameComoRealizado(); // Feature feita por Lucas Mocelin e Eduardo Hoffmann
                     }
-                    break; // aplicar ações específicas para cada tipo de usuário
+                    break;
                 case 3:
                     if (usuarioAtual instanceof Medico) {
-                        filtraAutorizacoes();
+                        filtraAutorizacoes(); // Feature feita por Henrique Rolim
+                    } else if (usuarioAtual instanceof Paciente) {
+                        listarAutorizacoesPaciente(); // Feature feita por Lucas Mocelin, Eduardo Hoffmann e Letícia
                     }
-                    
-                    break; // aplicar ações específicas para cada tipo de usuário
+                    break;
                 case 4:
-                    if (usuarioAtual instanceof Administrador){
-                        mostrarEstatisticasDoSistema();
+                    if (usuarioAtual instanceof Administrador) {
+                        mostrarEstatisticasDoSistema(); // Feature feita por Henrique Rolim
                     }
-                    break; // aplicar ações específicas para cada tipo de usuário
+                    break;
                 case 5:
-                    if(usuarioAtual instanceof Administrador){
-                        usuarios.listarTodosOsUsuariosCadastradosNoSistema();
+                    if (usuarioAtual instanceof Administrador) {
+                        usuarios.listarTodosOsUsuariosCadastradosNoSistema(); // Feature feita por Luiz Felipe
                     }
                     break;
                 default:
@@ -113,7 +118,7 @@ public class Sistema {
         String tipo = scanner.nextLine().trim();
 
         Integer id = lerIdUsuario();
-        if (id == null) {return;}
+        if (id == null) { return; }
 
         System.out.print("Nome do novo Usuário: ");
         String nome = scanner.nextLine().trim();
@@ -123,8 +128,8 @@ public class Sistema {
             System.out.println("Usuário não foi criado. Tipo de usuário não existente.");
             return;
         }
-        usuarios.adicionarUsuario(usuario);
 
+        usuarios.adicionarUsuario(usuario);
         System.out.printf("Novo usuário criado: " + usuarios.descreveUsuario(usuario) + "\n");
     }
 
@@ -132,11 +137,13 @@ public class Sistema {
         System.out.print("Id do novo Usuário: ");
         try {
             int id = scanner.nextInt();
-            scanner.nextLine(); // limpa buffer
-            if(usuarios.buscarPorID(id) != null){return null;}
+            scanner.nextLine();
+
+            if (usuarios.buscarPorID(id) != null) { return null; }
+
             return id;
         } catch (Exception e) {
-            scanner.nextLine(); // limpa buffer
+            scanner.nextLine();
             System.out.println("Erro: Id deve ser composto apenas por números.");
             return null;
         }
@@ -146,28 +153,22 @@ public class Sistema {
         switch (tipo.toLowerCase()) {
             case "administrador":
                 return new Administrador(id, nome);
-
             case "paciente":
                 return new Paciente(id, nome);
-
             case "médico":
             case "medico":
                 return new Medico(id, nome);
-
             default:
                 return null;
         }
     }
 
-
-    private void filtraAutorizacoes(){
+    private void filtraAutorizacoes() {
         Medico medico = (Medico) usuarioAtual;
 
         System.out.println("\n=== AUTORIZAÇÕES DO MÉDICO ===");
 
-        for (AutorizacaoExame autorizacao :
-                autorizacoes.buscarPorMedico(medico)) {
-
+        for (AutorizacaoExame autorizacao : autorizacoes.buscarPorMedico(medico)) {
             System.out.println(
                 "Código: " + autorizacao.getCodigo()
                 + " | Paciente: " + autorizacao.getPaciente().getNome()
@@ -178,8 +179,7 @@ public class Sistema {
         // falta implementar filtragem por paciente ou tipo de exame, de acordo com enunciado
     }
 
-
-    private void mostrarEstatisticasDoSistema(){
+    private void mostrarEstatisticasDoSistema() {
         System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
 
         System.out.println("Total de médicos: " +
@@ -200,16 +200,74 @@ public class Sistema {
             Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
     }
 
+    private void marcarExameComoRealizado() {
+        Paciente paciente = (Paciente) usuarioAtual;
+
+        System.out.println("\n=== MARCAR EXAME COMO REALIZADO ===");
+
+        List<AutorizacaoExame> lista = autorizacoes.buscarPorPaciente(paciente);
+
+        if (lista.isEmpty()) {
+            System.out.println("Nenhuma autorização encontrada.");
+            return;
+        }
+
+        for (AutorizacaoExame autorizacao : lista) {
+            System.out.println(
+                "Código: " + autorizacao.getCodigo()
+                + " | Exame: " + autorizacao.getTipoExame()
+                + " | Data Solicitação: " + autorizacao.getDataCadastro()
+                + " | Realizado: " + autorizacao.isRealizado()
+            );
+        }
+
+        try {
+            System.out.print("Digite o código da autorização: ");
+            int codigo = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Digite a data de realização (AAAA-MM-DD): ");
+            String dataTexto = scanner.nextLine();
+
+            java.time.LocalDate dataRealizacao = java.time.LocalDate.parse(dataTexto);
+
+            autorizacoes.marcarComoRealizado(codigo, paciente, dataRealizacao);
+        } catch (Exception e) {
+            System.out.println("Dados inválidos.");
+        }
+    }
+
+    private void listarAutorizacoesPaciente() {
+        Paciente paciente = (Paciente) usuarioAtual;
+
+        System.out.println("\n=== SUAS AUTORIZAÇÕES ===");
+
+        List<AutorizacaoExame> lista = autorizacoes.buscarPorPaciente(paciente);
+
+        if (lista.isEmpty()) {
+            System.out.println("Nenhuma autorização encontrada.");
+            return;
+        }
+
+        for (AutorizacaoExame autorizacao : lista) {
+            System.out.println(
+                "Código: " + autorizacao.getCodigo()
+                + " | Exame: " + autorizacao.getTipoExame()
+                + " | Data Solicitação: " + autorizacao.getDataCadastro()
+                + " | Realizado: "
+                + (autorizacao.isRealizado() ? autorizacao.getDataRealizacao() : "Não")
+            );
+        }
+    }
 
     /* Carrega dados iniciais para o sistema.
     São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
     private void carregarDadosIniciais() {
         Administrador admin = new Administrador(1, "Cláudio");
-        
+
         Medico medico1 = new Medico(101, "Pedro");
         Medico medico2 = new Medico(102, "Maria");
         Medico medico3 = new Medico(103, "João");
-        
+
         Paciente paciente1 = new Paciente(1001, "Ana");
         Paciente paciente2 = new Paciente(1002, "Carlos");
         Paciente paciente3 = new Paciente(1003, "Beatriz");
