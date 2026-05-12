@@ -158,26 +158,60 @@ public class Sistema {
         }
     }
 
+    private void filtraAutorizacoes() {
 
-    private void filtraAutorizacoes(){
-        Medico medico = (Medico) usuarioAtual;
+        System.out.println("\nFiltrar por:");
+        System.out.println("[1] Paciente");
+        System.out.println("[2] Tipo de exame");
 
-        System.out.println("\n=== AUTORIZAÇÕES DO MÉDICO ===");
+        int filtro = Integer.parseInt(scanner.nextLine());
 
-        for (AutorizacaoExame autorizacao :
-                autorizacoes.buscarPorMedico(medico)) {
+        if (filtro == 1) {
 
-            System.out.println(
-                "Código: " + autorizacao.getCodigo()
-                + " | Paciente: " + autorizacao.getPaciente().getNome()
-                + " | Exame: " + autorizacao.getTipoExame()
+            System.out.print("Nome do paciente: ");
+            String nomePaciente = scanner.nextLine();
+
+            Paciente paciente =
+                (Paciente) usuarios.buscarPorNome(nomePaciente);
+
+            if (paciente != null) {
+
+                for (AutorizacaoExame autorizacao :
+                        autorizacoes.buscarPorPaciente(paciente)) {
+
+                    System.out.println(
+                        "Código: " + autorizacao.getCodigo()
+                        + " | Exame: " + autorizacao.getTipoExame()
+                    );
+                }
+
+            } else {
+                System.out.println("Paciente não encontrado.");
+            }
+
+        } else if (filtro == 2) {
+
+            System.out.print("Tipo do exame: ");
+            String tipo = scanner.nextLine();
+
+            TipoExame tipoExame =
+                TipoExame.valueOf(tipo.toUpperCase());
+            
+            for (AutorizacaoExame autorizacao :
+                    autorizacoes.buscarPorTipoExame(tipoExame)) {
+
+                System.out.println(
+                    "Código: " + autorizacao.getCodigo()
+                    + " | Paciente: "
+                    + autorizacao.getPaciente().getNome()
             );
         }
 
-        // falta implementar filtragem por paciente ou tipo de exame, de acordo com enunciado
+    } else {
+        System.out.println("Filtro inválido.");
     }
-
-
+}
+     
     private void mostrarEstatisticasDoSistema(){
         System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
 
@@ -192,6 +226,9 @@ public class Sistema {
 
         System.out.println("Total de usuários: " +
             Estatisticas.contarUsuarios(usuarios.getUsuarios()));
+
+        System.out.println("Total de autorizações: " +
+            autorizacoes.contarAutorizacoes());
 
         // aplicar total de autorizações emitidas que está faltando, de acordo com enunciado
 

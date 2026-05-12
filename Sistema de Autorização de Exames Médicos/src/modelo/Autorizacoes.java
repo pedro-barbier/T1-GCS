@@ -59,6 +59,19 @@ public class Autorizacoes {
         return buscarPorMedico(medico);
     }
 
+    public List<AutorizacaoExame> buscarPorTipoExame(TipoExame tipoExame) {
+
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+
+        for (AutorizacaoExame autorizacao : autorizacoes) {
+            if (autorizacao.getTipoExame() == tipoExame) {
+                resultado.add(autorizacao);
+            }
+        }
+
+        return resultado;
+    }
+
     public int contarAutorizacoes() {
         return this.autorizacoes.size();
     }
