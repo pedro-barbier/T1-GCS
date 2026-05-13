@@ -29,6 +29,7 @@ public class Sistema {
                 System.out.println("[ 3 ] - Listar autorização de exames por paciente ou médico"); // deve ser possivel buscar por apenas parte do nome (usar startWith)
                 System.out.println("[ 4 ] - Estatísticas gerais do sistema");
                 System.out.println("[ 5 ] - Listar todos os usuários cadastrados no sistema.");
+                System.out.println("[ 6 ] - Remover um usuário.");
                 break;
             case "Paciente":
                 System.out.println("[ 2 ] - Marcar um exame como realizado");
@@ -70,6 +71,8 @@ public class Sistema {
                         criarNovoUsuario(); // Feature feita por Luiz Felipe
                     } else if (usuarioAtual instanceof Paciente) {
                         marcarExameComoRealizado(); // Feature feita por Lucas Mocelin e Eduardo Hoffmann
+                    } else if (usuarioAtual instanceof Medico) {
+                        // Feature feita por Levi
                     }
                     break;
                 case 3:
@@ -78,17 +81,28 @@ public class Sistema {
                     } else if (usuarioAtual instanceof Paciente) {
                         listarAutorizacoesPaciente(); // Feature feita por Lucas Mocelin, Eduardo Hoffmann e Letícia
                     } else if (usuarioAtual instanceof Administrador) {
-                        buscarUsuarioEListarAutorizacoes(); //feita por letícia
+                        buscarUsuarioEListarAutorizacoes(); // Feature feita por Letícia e Eduardo Hoffmann
                     }
                     break;
                 case 4:
                     if (usuarioAtual instanceof Administrador) {
                         mostrarEstatisticasDoSistema(); // Feature feita por Henrique Rolim
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
                     }
                     break;
                 case 5:
                     if (usuarioAtual instanceof Administrador) {
                         usuarios.listarTodosOsUsuariosCadastradosNoSistema(); // Feature feita por Luiz Felipe
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
+                    }
+                    break;
+                case 6:
+                    if (usuarioAtual instanceof Administrador) {
+                        // Feature feita por Levi
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
                     }
                     break;
                 default:
