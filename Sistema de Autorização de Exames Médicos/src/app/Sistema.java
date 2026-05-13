@@ -320,7 +320,7 @@ public class Sistema {
         }
     }
 
-    private void listarAutorizacoesPaciente() {
+    private void listarAutorizacoesPaciente() { //add para a funcionalidade 
         Paciente paciente = (Paciente) usuarioAtual;
 
         System.out.println("\n=== SUAS AUTORIZAÇÕES ===");
@@ -331,6 +331,9 @@ public class Sistema {
             System.out.println("Nenhuma autorização encontrada.");
             return;
         }
+
+        // Ordena da mais recente para a mais antiga pela data de cadastro
+        lista.sort((a, b) -> b.getDataCadastro().compareTo(a.getDataCadastro()));
 
         for (AutorizacaoExame autorizacao : lista) {
             System.out.println(
