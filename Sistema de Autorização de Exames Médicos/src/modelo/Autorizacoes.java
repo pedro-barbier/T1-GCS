@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,4 +103,50 @@ public class Autorizacoes {
         return temp;
     }
 
+    public List<AutorizacaoExame> listarPorPacienteOrdenadoPorData(Paciente paciente) {
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            if (a.getPaciente().equals(paciente)) {
+                resultado.add(a);
+            }
+        }
+        // Ordena da mais recente para a mais antiga pela data de cadastro
+        resultado.sort(Comparator.comparing(AutorizacaoExame::getDataCadastro).reversed());
+        return resultado;
+
+    }
+        
+    public boolean marcarComoRealizado(int codigo, Paciente paciente, java.time.LocalDate dataRealizacao) {
+
+        List<AutorizacaoExame> encontradas = buscarPorCodigo(codigo);
+
+        if (encontradas.isEmpty()) {
+            System.out.println("Autorização não encontrada.");
+            return false;
+        }
+
+        AutorizacaoExame autorizacao = encontradas.get(0);
+
+        if (!autorizacao.getPaciente().equals(paciente)) {
+            System.out.println("Essa autorização não pertence ao paciente atual.");
+            return false;
+        }
+
+        if (dataRealizacao.isBefore(autorizacao.getDataCadastro())) {
+            System.out.println("A data de realização não pode ser anterior à data da solicitação.");
+            return false;
+        }
+
+        if (dataRealizacao.isAfter(autorizacao.getDataCadastro().plusDays(30))) {
+            System.out.println("A data de realização não pode ser posterior a 30 dias da solicitação.");
+            return false;
+        }
+
+        autorizacao.setDataRealizacao(dataRealizacao);
+
+        System.out.println("Exame marcado como realizado com sucesso!");
+        return true;
+    }
 }
+
+

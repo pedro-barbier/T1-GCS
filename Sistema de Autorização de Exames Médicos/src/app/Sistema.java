@@ -3,6 +3,9 @@ package app;
 import modelo.*;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalDate;
 
 public class Sistema {
     private Scanner scanner = new Scanner(System.in);
@@ -27,6 +30,7 @@ public class Sistema {
                 System.out.println("[ 3 ] - Listar autorização de exames por paciente ou médico"); // deve ser possivel buscar por apenas parte do nome (usar startWith)
                 System.out.println("[ 4 ] - Estatísticas gerais do sistema");
                 System.out.println("[ 5 ] - Listar todos os usuários cadastrados no sistema.");
+                System.out.println("[ 6 ] - Remover um usuário.");
                 break;
             case "Paciente":
                 System.out.println("[ 2 ] - Marcar um exame como realizado");
@@ -37,6 +41,7 @@ public class Sistema {
                 System.out.println("[ 3 ] - Filtrar autorizações");
                 break;
         }
+
         System.out.println("[ 0 ] - Sair");
         System.out.print("Opção: ");
     }
@@ -54,33 +59,51 @@ public class Sistema {
                 System.out.println("Opção inválida. Tente novamente.");
                 continue;
             }
-            
+
             switch (opcao) {
                 case 0:
                     System.out.println("Saindo...");
                     return;
                 case 1:
-                    selecionarUsuario();
+                    selecionarUsuario(); // Feature feita por Pedro Barbieri
                     continue;
                 case 2:
-                    if (usuarioAtual instanceof Administrador){
-                        criarNovoUsuario();
+                    if (usuarioAtual instanceof Administrador) {
+                        criarNovoUsuario(); // Feature feita por Luiz Felipe
+                    } else if (usuarioAtual instanceof Paciente) {
+                        marcarExameComoRealizado(); // Feature feita por Lucas Mocelin e Eduardo Hoffmann
+                    } else if (usuarioAtual instanceof Medico) {
+                        // Feature feita por Levi
                     }
-                    break; // aplicar ações específicas para cada tipo de usuário
+                    break;
                 case 3:
                     if (usuarioAtual instanceof Medico) {
-                        filtraAutorizacoes();
+                        filtraAutorizacoes(); // Feature feita por Henrique Rolim
+                    } else if (usuarioAtual instanceof Paciente) {
+                        listarAutorizacoesPaciente(); // Feature feita por Lucas Mocelin, Eduardo Hoffmann e Letícia
+                    } else if (usuarioAtual instanceof Administrador) {
+                        buscarUsuarioEListarAutorizacoes(); // Feature feita por Letícia e Eduardo Hoffmann
                     }
-                    
-                    break; // aplicar ações específicas para cada tipo de usuário
+                    break;
                 case 4:
-                    if (usuarioAtual instanceof Administrador){
-                        mostrarEstatisticasDoSistema();
+                    if (usuarioAtual instanceof Administrador) {
+                        mostrarEstatisticasDoSistema(); // Feature feita por Henrique Rolim
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
                     }
-                    break; // aplicar ações específicas para cada tipo de usuário
+                    break;
                 case 5:
-                    if(usuarioAtual instanceof Administrador){
-                        usuarios.listarTodosOsUsuariosCadastradosNoSistema();
+                    if (usuarioAtual instanceof Administrador) {
+                        usuarios.listarTodosOsUsuariosCadastradosNoSistema(); // Feature feita por Luiz Felipe
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
+                    }
+                    break;
+                case 6:
+                    if (usuarioAtual instanceof Administrador) {
+                        // Feature feita por Levi
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
                     }
                     break;
                 default:
@@ -112,7 +135,7 @@ public class Sistema {
         String tipo = scanner.nextLine().trim();
 
         Integer id = lerIdUsuario();
-        if (id == null) {return;}
+        if (id == null) { return; }
 
         System.out.print("Nome do novo Usuário: ");
         String nome = scanner.nextLine().trim();
@@ -122,8 +145,8 @@ public class Sistema {
             System.out.println("Usuário não foi criado. Tipo de usuário não existente.");
             return;
         }
-        usuarios.adicionarUsuario(usuario);
 
+        usuarios.adicionarUsuario(usuario);
         System.out.printf("Novo usuário criado: " + usuarios.descreveUsuario(usuario) + "\n");
     }
 
@@ -131,11 +154,13 @@ public class Sistema {
         System.out.print("Id do novo Usuário: ");
         try {
             int id = scanner.nextInt();
-            scanner.nextLine(); // limpa buffer
-            if(usuarios.buscarPorID(id) != null){return null;}
+            scanner.nextLine();
+
+            if (usuarios.buscarPorID(id) != null) { return null; }
+
             return id;
         } catch (Exception e) {
-            scanner.nextLine(); // limpa buffer
+            scanner.nextLine();
             System.out.println("Erro: Id deve ser composto apenas por números.");
             return null;
         }
@@ -145,14 +170,11 @@ public class Sistema {
         switch (tipo.toLowerCase()) {
             case "administrador":
                 return new Administrador(id, nome);
-
             case "paciente":
                 return new Paciente(id, nome);
-
             case "médico":
             case "medico":
                 return new Medico(id, nome);
-
             default:
                 return null;
         }
@@ -210,9 +232,75 @@ public class Sistema {
     } else {
         System.out.println("Filtro inválido.");
     }
-}
-     
-    private void mostrarEstatisticasDoSistema(){
+
+    private void buscarUsuarioEListarAutorizacoes() { // Letícia e Eduardo Hoffmann
+        System.out.println("\n=== BUSCAR MÉDICO OU PACIENTE E LISTAR AUTORIZAÇÕES ===");
+        System.out.print("Digite parte do nome do usuário (médico ou paciente): ");
+        String parte = scanner.nextLine().trim();
+
+        List<Usuario> encontrados = usuarios.buscarPorParteDoNome(parte);
+
+        // Filtra apenas médicos e pacientes
+        List<Usuario> filtrados = new ArrayList<>();
+        for (Usuario u : encontrados) {
+            if (u instanceof Medico || u instanceof Paciente) {
+                filtrados.add(u);
+            }
+        }
+
+        if (filtrados.isEmpty()) {
+            System.out.println("Nenhum médico ou paciente encontrado com esse nome.");
+            return;
+        }
+
+        System.out.println("\nUsuários encontrados:");
+        for (int i = 0; i < filtrados.size(); i++) {
+            System.out.println("[" + i + "] " + usuarios.descreveUsuario(filtrados.get(i)));
+        }
+        System.out.print("Escolha o número do usuário: ");
+        int escolha;
+        try {
+            escolha = Integer.parseInt(scanner.nextLine());
+            if (escolha < 0 || escolha >= filtrados.size()) {
+                System.out.println("Opção inválida.");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        Usuario selecionado = filtrados.get(escolha);
+        List<AutorizacaoExame> listaAut;
+
+        if (selecionado instanceof Medico) {
+            listaAut = autorizacoes.buscarPorMedico((Medico) selecionado);
+        } else {
+            listaAut = autorizacoes.buscarPorPaciente((Paciente) selecionado);
+        }
+
+        // Ordenação por data (mais antiga para mais recente)
+        listaAut.sort((a, b) -> a.getDataCadastro().compareTo(b.getDataCadastro()));
+
+        System.out.println("\nAutorizações de " + selecionado.getNome() + ":");
+        if (listaAut.isEmpty()) {
+            System.out.println("Nenhuma autorização encontrada.");
+            return;
+        }
+
+        for (AutorizacaoExame aut : listaAut) {
+            System.out.println(
+                "Código: " + aut.getCodigo()
+                + " | Data: " + aut.getDataCadastro()
+                + " | Paciente: " + aut.getPaciente().getNome()
+                + " | Médico: " + aut.getMedicoSolicitante().getNome()
+                + " | Exame: " + aut.getTipoExame()
+                + " | Realizado: " + (aut.isRealizado() ? aut.getDataRealizacao() : "Não")
+            );
+        }
+    }   
+
+    private void mostrarEstatisticasDoSistema() {
         System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
 
         System.out.println("Total de médicos: " +
@@ -236,16 +324,77 @@ public class Sistema {
             Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
     }
 
+    private void marcarExameComoRealizado() {
+        Paciente paciente = (Paciente) usuarioAtual;
+
+        System.out.println("\n=== MARCAR EXAME COMO REALIZADO ===");
+
+        List<AutorizacaoExame> lista = autorizacoes.buscarPorPaciente(paciente);
+
+        if (lista.isEmpty()) {
+            System.out.println("Nenhuma autorização encontrada.");
+            return;
+        }
+
+        for (AutorizacaoExame autorizacao : lista) {
+            System.out.println(
+                "Código: " + autorizacao.getCodigo()
+                + " | Exame: " + autorizacao.getTipoExame()
+                + " | Data Solicitação: " + autorizacao.getDataCadastro()
+                + " | Realizado: " + autorizacao.isRealizado()
+            );
+        }
+
+        try {
+            System.out.print("Digite o código da autorização: ");
+            int codigo = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Digite a data de realização (AAAA-MM-DD): ");
+            String dataTexto = scanner.nextLine();
+
+            java.time.LocalDate dataRealizacao = java.time.LocalDate.parse(dataTexto);
+
+            autorizacoes.marcarComoRealizado(codigo, paciente, dataRealizacao);
+        } catch (Exception e) {
+            System.out.println("Dados inválidos.");
+        }
+    }
+
+    private void listarAutorizacoesPaciente() { //add para a funcionalidade 
+        Paciente paciente = (Paciente) usuarioAtual;
+
+        System.out.println("\n=== SUAS AUTORIZAÇÕES ===");
+
+        List<AutorizacaoExame> lista = autorizacoes.buscarPorPaciente(paciente);
+
+        if (lista.isEmpty()) {
+            System.out.println("Nenhuma autorização encontrada.");
+            return;
+        }
+
+        // Ordena da mais recente para a mais antiga pela data de cadastro
+        lista.sort((a, b) -> b.getDataCadastro().compareTo(a.getDataCadastro()));
+
+        for (AutorizacaoExame autorizacao : lista) {
+            System.out.println(
+                "Código: " + autorizacao.getCodigo()
+                + " | Exame: " + autorizacao.getTipoExame()
+                + " | Data Solicitação: " + autorizacao.getDataCadastro()
+                + " | Realizado: "
+                + (autorizacao.isRealizado() ? autorizacao.getDataRealizacao() : "Não")
+            );
+        }
+    }
 
     /* Carrega dados iniciais para o sistema.
     São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
     private void carregarDadosIniciais() {
         Administrador admin = new Administrador(1, "Cláudio");
-        
+
         Medico medico1 = new Medico(101, "Pedro");
         Medico medico2 = new Medico(102, "Maria");
         Medico medico3 = new Medico(103, "João");
-        
+
         Paciente paciente1 = new Paciente(1001, "Ana");
         Paciente paciente2 = new Paciente(1002, "Carlos");
         Paciente paciente3 = new Paciente(1003, "Beatriz");
@@ -262,14 +411,14 @@ public class Sistema {
         usuarios.adicionarUsuario(paciente4);
         usuarios.adicionarUsuario(paciente5);
 
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente1, TipoExame.RAIOX));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente2, TipoExame.TOMOGRAFIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente3, TipoExame.RESSONANCIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente4, TipoExame.ULTRASSONOGRAFIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente5, TipoExame.ELETROCARDIOGRAMA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico1, paciente5, TipoExame.COLONOSCOPIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente1, TipoExame.ECOCARDIOGRAMA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico2, paciente3, TipoExame.ANGIOGRAFIA));
-        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(medico3, paciente2, TipoExame.PUNCAO));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 1, 21) ,medico1, paciente1, TipoExame.RAIOX));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2, 15), medico2, paciente2, TipoExame.TOMOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 3, 10), medico3, paciente3, TipoExame.RESSONANCIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 3, 5), medico1, paciente4, TipoExame.ULTRASSONOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2, 12), medico2, paciente5, TipoExame.ELETROCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 10, 18), medico1, paciente5, TipoExame.COLONOSCOPIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 4, 22), medico3, paciente1, TipoExame.ECOCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 5, 11), medico2, paciente3, TipoExame.ANGIOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 12, 15), medico3, paciente2, TipoExame.PUNCAO));
     }
 }
