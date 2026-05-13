@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +89,19 @@ public class Autorizacoes {
         }
         return temp;
     }
+
+    public List<AutorizacaoExame> listarPorPacienteOrdenadoPorData(Paciente paciente) {//add
+    List<AutorizacaoExame> resultado = new ArrayList<>();
+    for (AutorizacaoExame a : autorizacoes) {
+        if (a.getPaciente().equals(paciente)) {
+            resultado.add(a);
+        }
+    }
+    // Ordena da mais recente para a mais antiga pela data de cadastro
+    resultado.sort(Comparator.comparing(AutorizacaoExame::getDataCadastro).reversed());
+    return resultado;
+
+}
         
     public boolean marcarComoRealizado(int codigo, Paciente paciente, java.time.LocalDate dataRealizacao) {
 

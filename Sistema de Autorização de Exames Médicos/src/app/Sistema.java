@@ -320,28 +320,31 @@ public class Sistema {
         }
     }
 
-    private void listarAutorizacoesPaciente() {
-        Paciente paciente = (Paciente) usuarioAtual;
+    private void listarAutorizacoesPaciente() { //add para a funcionalidade 
+    Paciente paciente = (Paciente) usuarioAtual;
 
-        System.out.println("\n=== SUAS AUTORIZAÇÕES ===");
+    System.out.println("\n=== SUAS AUTORIZAÇÕES ===");
 
-        List<AutorizacaoExame> lista = autorizacoes.buscarPorPaciente(paciente);
+    List<AutorizacaoExame> lista = autorizacoes.buscarPorPaciente(paciente);
 
-        if (lista.isEmpty()) {
-            System.out.println("Nenhuma autorização encontrada.");
-            return;
-        }
-
-        for (AutorizacaoExame autorizacao : lista) {
-            System.out.println(
-                "Código: " + autorizacao.getCodigo()
-                + " | Exame: " + autorizacao.getTipoExame()
-                + " | Data Solicitação: " + autorizacao.getDataCadastro()
-                + " | Realizado: "
-                + (autorizacao.isRealizado() ? autorizacao.getDataRealizacao() : "Não")
-            );
-        }
+    if (lista.isEmpty()) {
+        System.out.println("Nenhuma autorização encontrada.");
+        return;
     }
+
+    // Ordena da mais recente para a mais antiga pela data de cadastro
+    lista.sort((a, b) -> b.getDataCadastro().compareTo(a.getDataCadastro()));
+
+    for (AutorizacaoExame autorizacao : lista) {
+        System.out.println(
+            "Código: " + autorizacao.getCodigo()
+            + " | Exame: " + autorizacao.getTipoExame()
+            + " | Data Solicitação: " + autorizacao.getDataCadastro()
+            + " | Realizado: "
+            + (autorizacao.isRealizado() ? autorizacao.getDataRealizacao() : "Não")
+        );
+    }
+}
 
     /* Carrega dados iniciais para o sistema.
     São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
