@@ -397,26 +397,48 @@ public class Sistema {
     São criados um administrador, três médicos e cinco pacientes, além de várias autorizações de exames para demonstrar o funcionamento do sistema. */
     private void carregarDadosIniciais() {
         Administrador admin = new Administrador(1, "Cláudio");
+        Administrador admin2 = new Administrador(2, "Renata");
 
         Medico medico1 = new Medico(101, "Pedro");
         Medico medico2 = new Medico(102, "Maria");
         Medico medico3 = new Medico(103, "João");
+        Medico medico4 = new Medico(104, "Juliana");
+        Medico medico5 = new Medico(105, "Ricardo");
+        Medico medico6 = new Medico(106, "Patrícia");
 
-        Paciente paciente1 = new Paciente(1001, "Ana");
-        Paciente paciente2 = new Paciente(1002, "Carlos");
-        Paciente paciente3 = new Paciente(1003, "Beatriz");
-        Paciente paciente4 = new Paciente(1004, "Lucas");
-        Paciente paciente5 = new Paciente(1005, "Fernanda");
+        Paciente paciente1  = new Paciente(1001, "Ana");
+        Paciente paciente2  = new Paciente(1002, "Carlos");
+        Paciente paciente3  = new Paciente(1003, "Beatriz");
+        Paciente paciente4  = new Paciente(1004, "Lucas");
+        Paciente paciente5  = new Paciente(1005, "Fernanda");
+        Paciente paciente6  = new Paciente(1006, "Rafael");
+        Paciente paciente7  = new Paciente(1007, "Camila");
+        Paciente paciente8  = new Paciente(1008, "Thiago");
+        Paciente paciente9  = new Paciente(1009, "Larissa");
+        Paciente paciente10 = new Paciente(1010, "Bruno");
+        Paciente paciente11 = new Paciente(1011, "Mariana");
+        Paciente paciente12 = new Paciente(1012, "Felipe");
 
         usuarios.adicionarUsuario(admin);
+        usuarios.adicionarUsuario(admin2);
         usuarios.adicionarUsuario(medico1);
         usuarios.adicionarUsuario(medico2);
         usuarios.adicionarUsuario(medico3);
+        usuarios.adicionarUsuario(medico4);
+        usuarios.adicionarUsuario(medico5);
+        usuarios.adicionarUsuario(medico6);
         usuarios.adicionarUsuario(paciente1);
         usuarios.adicionarUsuario(paciente2);
         usuarios.adicionarUsuario(paciente3);
         usuarios.adicionarUsuario(paciente4);
         usuarios.adicionarUsuario(paciente5);
+        usuarios.adicionarUsuario(paciente6);
+        usuarios.adicionarUsuario(paciente7);
+        usuarios.adicionarUsuario(paciente8);
+        usuarios.adicionarUsuario(paciente9);
+        usuarios.adicionarUsuario(paciente10);
+        usuarios.adicionarUsuario(paciente11);
+        usuarios.adicionarUsuario(paciente12);
 
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 1, 21) ,medico1, paciente1, TipoExame.RAIOX));
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2, 15), medico2, paciente2, TipoExame.TOMOGRAFIA));
@@ -427,5 +449,26 @@ public class Sistema {
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 4, 22), medico3, paciente1, TipoExame.ECOCARDIOGRAMA));
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 5, 11), medico2, paciente3, TipoExame.ANGIOGRAFIA));
         autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 12, 15), medico3, paciente2, TipoExame.PUNCAO));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 1,  8),  medico4, paciente6,  TipoExame.RAIOX));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 1, 30),  medico5, paciente7,  TipoExame.TOMOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2,  3),  medico6, paciente8,  TipoExame.RESSONANCIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2, 20),  medico4, paciente9,  TipoExame.ULTRASSONOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 3, 17),  medico5, paciente10, TipoExame.ELETROCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 3, 25),  medico6, paciente11, TipoExame.COLONOSCOPIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 4,  1),  medico4, paciente12, TipoExame.ECOCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 4, 14),  medico5, paciente1,  TipoExame.ANGIOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 4, 29),  medico6, paciente2,  TipoExame.PUNCAO));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 5,  2),  medico1, paciente7,  TipoExame.TOMOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 5,  6),  medico2, paciente8,  TipoExame.RAIOX));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 5,  9),  medico3, paciente9,  TipoExame.ECOCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 11,  4), medico4, paciente3,  TipoExame.RESSONANCIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 11, 22), medico5, paciente4,  TipoExame.COLONOSCOPIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 12,  1), medico6, paciente5,  TipoExame.ULTRASSONOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2025, 12, 28), medico1, paciente10, TipoExame.ELETROCARDIOGRAMA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 1, 15),  medico2, paciente11, TipoExame.ANGIOGRAFIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 2,  7),  medico3, paciente12, TipoExame.PUNCAO));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 3, 30),  medico4, paciente10, TipoExame.RAIOX));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 4,  8),  medico5, paciente12, TipoExame.RESSONANCIA));
+        autorizacoes.adicionarAutorizacao(new AutorizacaoExame(LocalDate.of(2026, 5, 13),  medico6, paciente6,  TipoExame.TOMOGRAFIA));
     }
 }
