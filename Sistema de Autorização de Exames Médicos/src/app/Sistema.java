@@ -3,6 +3,7 @@ package app;
 import modelo.*;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -29,6 +30,7 @@ public class Sistema {
                 System.out.println("[ 3 ] - Listar autorização de exames por paciente ou médico"); // deve ser possivel buscar por apenas parte do nome (usar startWith)
                 System.out.println("[ 4 ] - Estatísticas gerais do sistema");
                 System.out.println("[ 5 ] - Listar todos os usuários cadastrados no sistema.");
+                System.out.println("[ 6 ] - Remover um usuário.");
                 break;
             case "Paciente":
                 System.out.println("[ 2 ] - Marcar um exame como realizado");
@@ -70,6 +72,8 @@ public class Sistema {
                         criarNovoUsuario(); // Feature feita por Luiz Felipe
                     } else if (usuarioAtual instanceof Paciente) {
                         marcarExameComoRealizado(); // Feature feita por Lucas Mocelin e Eduardo Hoffmann
+                    } else if (usuarioAtual instanceof Medico) {
+                        // Feature feita por Levi
                     }
                     break;
                 case 3:
@@ -77,16 +81,29 @@ public class Sistema {
                         filtraAutorizacoes(); // Feature feita por Henrique Rolim
                     } else if (usuarioAtual instanceof Paciente) {
                         listarAutorizacoesPaciente(); // Feature feita por Lucas Mocelin, Eduardo Hoffmann e Letícia
+                    } else if (usuarioAtual instanceof Administrador) {
+                        buscarUsuarioEListarAutorizacoes(); // Feature feita por Letícia e Eduardo Hoffmann
                     }
                     break;
                 case 4:
                     if (usuarioAtual instanceof Administrador) {
                         mostrarEstatisticasDoSistema(); // Feature feita por Henrique Rolim
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
                     }
                     break;
                 case 5:
                     if (usuarioAtual instanceof Administrador) {
                         usuarios.listarTodosOsUsuariosCadastradosNoSistema(); // Feature feita por Luiz Felipe
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
+                    }
+                    break;
+                case 6:
+                    if (usuarioAtual instanceof Administrador) {
+                        // Feature feita por Levi
+                    } else {
+                        System.out.println("Opção inválida. Tente novamente.");
                     }
                     break;
                 default:
@@ -178,6 +195,73 @@ public class Sistema {
 
         // falta implementar filtragem por paciente ou tipo de exame, de acordo com enunciado
     }
+
+    private void buscarUsuarioEListarAutorizacoes() { // Letícia e Eduardo Hoffmann
+        System.out.println("\n=== BUSCAR MÉDICO OU PACIENTE E LISTAR AUTORIZAÇÕES ===");
+        System.out.print("Digite parte do nome do usuário (médico ou paciente): ");
+        String parte = scanner.nextLine().trim();
+
+        List<Usuario> encontrados = usuarios.buscarPorParteDoNome(parte);
+
+        // Filtra apenas médicos e pacientes
+        List<Usuario> filtrados = new ArrayList<>();
+        for (Usuario u : encontrados) {
+            if (u instanceof Medico || u instanceof Paciente) {
+                filtrados.add(u);
+            }
+        }
+
+        if (filtrados.isEmpty()) {
+            System.out.println("Nenhum médico ou paciente encontrado com esse nome.");
+            return;
+        }
+
+        System.out.println("\nUsuários encontrados:");
+        for (int i = 0; i < filtrados.size(); i++) {
+            System.out.println("[" + i + "] " + usuarios.descreveUsuario(filtrados.get(i)));
+        }
+        System.out.print("Escolha o número do usuário: ");
+        int escolha;
+        try {
+            escolha = Integer.parseInt(scanner.nextLine());
+            if (escolha < 0 || escolha >= filtrados.size()) {
+                System.out.println("Opção inválida.");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        Usuario selecionado = filtrados.get(escolha);
+        List<AutorizacaoExame> listaAut;
+
+        if (selecionado instanceof Medico) {
+            listaAut = autorizacoes.buscarPorMedico((Medico) selecionado);
+        } else {
+            listaAut = autorizacoes.buscarPorPaciente((Paciente) selecionado);
+        }
+
+        // Ordenação por data (mais antiga para mais recente)
+        listaAut.sort((a, b) -> a.getDataCadastro().compareTo(b.getDataCadastro()));
+
+        System.out.println("\nAutorizações de " + selecionado.getNome() + ":");
+        if (listaAut.isEmpty()) {
+            System.out.println("Nenhuma autorização encontrada.");
+            return;
+        }
+
+        for (AutorizacaoExame aut : listaAut) {
+            System.out.println(
+                "Código: " + aut.getCodigo()
+                + " | Data: " + aut.getDataCadastro()
+                + " | Paciente: " + aut.getPaciente().getNome()
+                + " | Médico: " + aut.getMedicoSolicitante().getNome()
+                + " | Exame: " + aut.getTipoExame()
+                + " | Realizado: " + (aut.isRealizado() ? aut.getDataRealizacao() : "Não")
+            );
+        }
+    }   
 
     private void mostrarEstatisticasDoSistema() {
         System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
