@@ -103,10 +103,23 @@ public class Autorizacoes {
         return temp;
     }
 
-    public List<AutorizacaoExame> listarPorPacienteOrdenadoPorData(Paciente paciente) {
+    public List<AutorizacaoExame> listarOrdenadoPorData(Paciente paciente) {
         List<AutorizacaoExame> resultado = new ArrayList<>();
         for (AutorizacaoExame a : autorizacoes) {
             if (a.getPaciente().equals(paciente)) {
+                resultado.add(a);
+            }
+        }
+        // Ordena da mais recente para a mais antiga pela data de cadastro
+        resultado.sort(Comparator.comparing(AutorizacaoExame::getDataCadastro).reversed());
+        return resultado;
+
+    }
+
+    public List<AutorizacaoExame> listarOrdenadoPorData(TipoExame exame) {
+        List<AutorizacaoExame> resultado = new ArrayList<>();
+        for (AutorizacaoExame a : autorizacoes) {
+            if (a.getTipoExame() == exame) {
                 resultado.add(a);
             }
         }
