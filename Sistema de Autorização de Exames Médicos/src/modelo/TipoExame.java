@@ -1,5 +1,8 @@
 package modelo;
 
+import java.text.Normalizer;
+import java.util.regex.Pattern;
+
 public enum TipoExame {
     RAIOX(1, "Raio-X"),
     TOMOGRAFIA(2, "Tomografia"),
@@ -31,5 +34,16 @@ public enum TipoExame {
     
     public String getDescricao() {
         return descricao;
+    }
+
+    public static TipoExame validaTipoExame(String tipo) {
+        String semHifen = tipo.trim().toUpperCase().replace("-", "");
+
+        String nfdNormalizedString = Normalizer.normalize(semHifen, Normalizer.Form.NFD);
+        
+        Pattern pattern = Pattern.compile("\\p{M}");
+        String semAcentos = pattern.matcher(nfdNormalizedString).replaceAll("");
+
+        return TipoExame.valueOf(semAcentos.replace("ç", "c").replace("Ç", "C"));
     }
 }
