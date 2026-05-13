@@ -186,7 +186,13 @@ public class Sistema {
         System.out.println("[1] Paciente");
         System.out.println("[2] Tipo de exame");
 
-        int filtro = Integer.parseInt(scanner.nextLine());
+        int filtro;
+        try {
+            filtro = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Opção inválida.");
+            return;
+        }
 
         if (filtro == 1) {
 
@@ -199,11 +205,13 @@ public class Sistema {
             if (paciente != null) {
 
                 for (AutorizacaoExame autorizacao :
-                        autorizacoes.buscarPorPaciente(paciente)) {
+                        autorizacoes.listarOrdenadoPorData(paciente)) {
 
                     System.out.println(
                         "Código: " + autorizacao.getCodigo()
                         + " | Exame: " + autorizacao.getTipoExame()
+                        + " | Data de cadastro: " + autorizacao.getDataCadastro()
+                        + " | Realizado: " + (autorizacao.isRealizado() ? autorizacao.getDataRealizacao() : "Não")
                     );
                 }
 
@@ -216,21 +224,22 @@ public class Sistema {
             System.out.print("Tipo do exame: ");
             String tipo = scanner.nextLine();
 
-            TipoExame tipoExame =
-                TipoExame.valueOf(tipo.toUpperCase());
+            TipoExame tipoExame = TipoExame.validaTipoExame(tipo);
             
             for (AutorizacaoExame autorizacao :
-                    autorizacoes.buscarPorTipoExame(tipoExame)) {
+                    autorizacoes.listarOrdenadoPorData(tipoExame)) {
 
                 System.out.println(
                     "Código: " + autorizacao.getCodigo()
-                    + " | Paciente: "
-                    + autorizacao.getPaciente().getNome()
-            );
-        }
+                    + " | Paciente: " + autorizacao.getPaciente().getNome()
+                    + " | Data de cadastro: " + autorizacao.getDataCadastro()
+                    + " | Realizado: " + (autorizacao.isRealizado() ? autorizacao.getDataRealizacao() : "Não")
+                );
+            }
 
-    } else {
-        System.out.println("Filtro inválido.");
+        } else {
+            System.out.println("Filtro inválido.");
+        }
     }
 
     private void buscarUsuarioEListarAutorizacoes() { // Letícia e Eduardo Hoffmann
@@ -317,8 +326,6 @@ public class Sistema {
 
         System.out.println("Total de autorizações: " +
             autorizacoes.contarAutorizacoes());
-
-        // aplicar total de autorizações emitidas que está faltando, de acordo com enunciado
 
         System.out.println("Percentual de exames realizados: " +
             Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
