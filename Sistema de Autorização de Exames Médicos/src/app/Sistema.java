@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
+// Classe responsável por controlar o fluxo principal do sistema,
+// incluindo menus, login, cadastro de usuários e operações sobre autorizações.
 public class Sistema {
     private Scanner scanner = new Scanner(System.in);
     private Usuarios usuarios = new Usuarios(); // classe para gerenciar os usuários do sistema
@@ -145,6 +147,11 @@ public class Sistema {
         }
     }
 
+    /*
+     * Cria uma nova autorização de exame para um paciente.
+     * O método lista os pacientes cadastrados, permite selecionar o tipo de exame
+     * e registra a autorização vinculada ao médico atualmente logado.
+     */
     private void criarAutorizacao() {
         int temp = 0;
         List<Usuario> pacientes = new ArrayList<>();
@@ -210,7 +217,12 @@ public class Sistema {
         System.out.println("Médico solicitante: " + aut_exame.getMedicoSolicitante().getNome());
     }
 
-    // Como Administrador criar um novo usuario.
+    /*
+     * Cria um novo usuário no sistema a partir dos dados informados pelo
+     * administrador.
+     * O método valida o tipo, o identificador e o nome antes de cadastrar o
+     * usuário.
+     */
     private void criarNovoUsuario() {
         System.out.print("\nDeseja criar qual tipo de Usuário [Administrador, Médico, Paciente]: ");
         String tipo = scanner.nextLine().trim();
@@ -241,7 +253,11 @@ public class Sistema {
         System.out.printf("Novo usuário criado: " + usuarios.descreveUsuario(usuario) + "\n");
     }
 
-    // Como Administrador remove um usuario.
+    /*
+     * Remove um usuário cadastrado a partir do identificador informado.
+     * A operação é disponibilizada para administradores e utiliza a lista de
+     * usuários do sistema.
+     */
     private void removerUsuario() {
         System.out.println("\n=== REMOVER UM USUÁRIO ===");
         usuarios.listarTodosOsUsuariosCadastradosNoSistema();
@@ -262,6 +278,11 @@ public class Sistema {
         }
     }
 
+    /*
+     * Lê e valida o identificador informado para um novo usuário.
+     * Retorna null quando o valor é inválido ou quando já existe um usuário com o
+     * mesmo Id.
+     */
     private Integer lerIdUsuario() {
         System.out.print("Id do novo Usuário: ");
         try {
@@ -285,6 +306,11 @@ public class Sistema {
         }
     }
 
+    /*
+     * Instancia o tipo correto de usuário com base no texto informado.
+     * Retorna null quando o tipo não corresponde a administrador, médico ou
+     * paciente.
+     */
     private Usuario criarUsuario(String tipo, int id, String nome) {
         switch (tipo.toLowerCase()) {
             case "administrador":
@@ -299,6 +325,10 @@ public class Sistema {
         }
     }
 
+    /*
+     * Filtra as autorizações de exame conforme o critério escolhido pelo médico.
+     * Permite buscar autorizações por paciente ou por tipo de exame.
+     */
     private void filtraAutorizacoes() {
 
         System.out.println("\nFiltrar por:");
@@ -358,7 +388,12 @@ public class Sistema {
         }
     }
 
-    private void buscarUsuarioEListarAutorizacoes() { // Letícia e Eduardo Hoffmann
+    /*
+     * Busca médicos ou pacientes por parte do nome e lista suas autorizações.
+     * O método permite ao administrador selecionar um usuário encontrado
+     * e visualizar as autorizações vinculadas a ele.
+     */
+    private void buscarUsuarioEListarAutorizacoes() {
         System.out.println("\n=== BUSCAR MÉDICO OU PACIENTE E LISTAR AUTORIZAÇÕES ===");
         System.out.print("Digite parte do nome do usuário (médico ou paciente): ");
         String parte = scanner.nextLine().trim();
@@ -424,6 +459,11 @@ public class Sistema {
         }
     }
 
+    /*
+     * Exibe estatísticas gerais do sistema para o administrador.
+     * As informações são calculadas a partir das listas de usuários e autorizações
+     * cadastradas.
+     */
     private void mostrarEstatisticasDoSistema() {
         System.out.println("\n=== ESTATISTICAS DO SISTEMA ===");
 
@@ -446,6 +486,11 @@ public class Sistema {
                 Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
     }
 
+    /*
+     * Permite ao paciente marcar uma autorização de exame como realizada.
+     * O método lista as autorizações do paciente atual, solicita o código e
+     * registra a data de realização.
+     */
     private void marcarExameComoRealizado() {
         Paciente paciente = (Paciente) usuarioAtual;
 
@@ -481,7 +526,11 @@ public class Sistema {
         }
     }
 
-    private void listarAutorizacoesPaciente() { // add para a funcionalidade
+    /*
+     * Lista as autorizações de exame do paciente atualmente logado.
+     * As autorizações são exibidas da mais recente para a mais antiga.
+     */
+    private void listarAutorizacoesPaciente() {
         Paciente paciente = (Paciente) usuarioAtual;
 
         System.out.println("\n=== SUAS AUTORIZAÇÕES ===");
