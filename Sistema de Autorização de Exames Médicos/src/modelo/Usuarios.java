@@ -10,6 +10,17 @@ public class Usuarios {
         this.usuarios.add(usuario);
     }
 
+    public boolean removerUsuario(int identificador) {
+        Usuario usuario = buscarPorID(identificador);
+
+        if (usuario != null) {
+            usuarios.remove(usuario);
+            return true;
+        }
+
+        return false;
+    }
+
     public Usuario buscarPorID(int identificador) {
 
         for (Usuario usuario : usuarios){
