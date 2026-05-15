@@ -73,7 +73,7 @@ public class Sistema {
                     } else if (usuarioAtual instanceof Paciente) {
                         marcarExameComoRealizado(); // Feature feita por Lucas Mocelin e Eduardo Hoffmann
                     } else if (usuarioAtual instanceof Medico) {
-                        // Feature feita por Levi
+                        criarAutorizacao(); // Feature feita por Levi e Pedro Barbieri
                     }
                     break;
                 case 3:
@@ -127,6 +127,70 @@ public class Sistema {
         } else {
             System.out.println("Usuário não encontrado. Tente novamente.");
         }
+    }
+
+    private void criarAutorizacao() {
+        int temp = 0;
+        List<Usuario> pacientes = new ArrayList<>();
+
+        System.out.println("\n=== Criar autorização ===");
+
+        System.out.println("\n--- Selecionar paciente ---");
+        int contador = 1;
+        for (Usuario user : usuarios.getUsuarios()) {
+            if (user instanceof Paciente) {
+                pacientes.add(user);
+                System.out.println("[ " + contador + " ] " + user.getNome());
+                contador++;
+            }
+        }
+        System.out.print("A qual paciente deseja conceder a autorização? ");
+        try {
+            temp = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("\nOpção inválida.");
+            return;
+        }
+
+        Usuario paciente;
+        try {
+            paciente = pacientes.get(temp-1);
+        } catch (Exception e) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        System.out.println("\n--- Selecionar tipo de exame ---");
+        contador = 1;
+        for (TipoExame exame : TipoExame.values()) {
+            System.out.println("[ " + contador + " ] " + exame.getDescricao());
+            contador++;
+        }
+        System.out.print("Qual seria o exame para o paciente? ");
+        try {
+            temp = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("\nOpção inválida.");
+            return;
+        }
+
+        TipoExame exame;
+        try {
+            exame = TipoExame.values()[temp-1];
+        } catch (Exception e) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        AutorizacaoExame aut_exame = new AutorizacaoExame(LocalDate.now(), (Medico) usuarioAtual, (Paciente) paciente, exame);
+        autorizacoes.adicionarAutorizacao(aut_exame);
+
+        System.out.println("\nAutorização criada com sucesso!");
+        System.out.println("Identificador: " + aut_exame.getCodigo());
+        System.out.println("Data de registro: " + aut_exame.getDataCadastro());
+        System.out.println("Paciente: " + aut_exame.getPaciente().getNome());
+        System.out.println("Exame pedido: " + aut_exame.getTipoExame().getDescricao());
+        System.out.println("Médico solicitante: " + aut_exame.getMedicoSolicitante().getNome());
     }
 
     // Como Administrador criar um novo usuario.
