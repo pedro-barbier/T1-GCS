@@ -101,7 +101,7 @@ public class Sistema {
                     break;
                 case 6:
                     if (usuarioAtual instanceof Administrador) {
-                        // Feature feita por Levi
+                        removerUsuario(); // Feature feita por Levi
                     } else {
                         System.out.println("Opção inválida. Tente novamente.");
                     }
@@ -148,6 +148,27 @@ public class Sistema {
 
         usuarios.adicionarUsuario(usuario);
         System.out.printf("Novo usuário criado: " + usuarios.descreveUsuario(usuario) + "\n");
+    }
+
+    // Como Administrador remove um usuario.
+    private void removerUsuario() {
+        System.out.println("\n=== REMOVER UM USUÁRIO ===");
+        usuarios.listarTodosOsUsuariosCadastradosNoSistema();
+
+        System.out.print("ID do usuario a remover: ");
+        int idUsuario;
+        try {
+            idUsuario = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
+        Usuario user = usuarios.buscarPorID(idUsuario);
+
+        if (usuarios.removerUsuario(idUsuario)) {
+            System.out.println("Usuario removido com sucesso: " + user.toString());
+        }
     }
 
     private Integer lerIdUsuario() {
