@@ -23,13 +23,13 @@ public class Usuarios {
 
     public Usuario buscarPorID(int identificador) {
 
-        for (Usuario usuario : usuarios){
+        for (Usuario usuario : usuarios) {
 
             if (usuario.getIdentificador() == identificador) {
                 return usuario;
             }
         }
-        
+
         return null;
     }
 
@@ -60,15 +60,15 @@ public class Usuarios {
         return temp;
     }
 
-    public String descreveUsuario(Usuario usuario){
+    public String descreveUsuario(Usuario usuario) {
         return "Id:" + usuario.getIdentificador() + ", Nome:" + usuario.getNome() + ", Tipo:" + usuario.getTipo();
     }
 
-    public void listarTodosOsUsuariosCadastradosNoSistema(){
+    public void listarTodosOsUsuariosCadastradosNoSistema() {
         List<Usuario> administradores = new ArrayList<>();
         List<Usuario> pacientes = new ArrayList<>();
         List<Usuario> medicos = new ArrayList<>();
-        for (Usuario usuario : usuarios){
+        for (Usuario usuario : usuarios) {
             switch (usuario.getTipo()) {
                 case "Administrador":
                     administradores.add(usuario);
@@ -84,19 +84,19 @@ public class Usuarios {
 
         System.out.println("\nUsuarios Cadastrados no Sistema:");
         System.out.println("Administradores:");
-        for (Usuario usuario : administradores){
+        for (Usuario usuario : administradores) {
             System.out.println(descreveUsuario(usuario));
         }
         System.out.println();
 
         System.out.println("Paciente:");
-        for (Usuario usuario : pacientes){
+        for (Usuario usuario : pacientes) {
             System.out.println(descreveUsuario(usuario));
         }
         System.out.println();
 
         System.out.println("Médicos:");
-        for (Usuario usuario : medicos){
+        for (Usuario usuario : medicos) {
             System.out.println(descreveUsuario(usuario));
         }
 

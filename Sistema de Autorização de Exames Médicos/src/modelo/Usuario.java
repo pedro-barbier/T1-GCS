@@ -4,7 +4,6 @@ public abstract class Usuario {
     private int identificador;
     private String nome;
 
-
     public Usuario(int identificador, String nome) {
         this.identificador = identificador;
         this.nome = nome;
