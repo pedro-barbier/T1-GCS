@@ -7,7 +7,7 @@ public class Estatisticas {
 
         int total = 0;
 
-        for (Usuario u: usuarios) {
+        for (Usuario u : usuarios) {
 
             if (u instanceof Medico) {
                 total++;
@@ -54,7 +54,7 @@ public class Estatisticas {
         int realizados = 0;
 
         for (AutorizacaoExame a : autorizacoes) {
-            
+
             if (a.getDataRealizacao() != null) {
                 realizados++;
             }

@@ -63,7 +63,6 @@ public class Autorizacoes {
         return resultado;
     }
 
-
     public List<AutorizacaoExame> getAutorizacoes() {
         List<AutorizacaoExame> temp = new ArrayList<>();
         for (AutorizacaoExame autorizacao : autorizacoes) {
@@ -97,7 +96,7 @@ public class Autorizacoes {
         return resultado;
 
     }
-        
+
     public boolean marcarComoRealizado(int codigo, Paciente paciente, java.time.LocalDate dataRealizacao) {
 
         List<AutorizacaoExame> encontradas = buscarPorCodigo(codigo);
@@ -130,5 +129,3 @@ public class Autorizacoes {
         return true;
     }
 }
-
-
