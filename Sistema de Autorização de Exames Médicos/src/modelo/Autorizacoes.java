@@ -63,27 +63,6 @@ public class Autorizacoes {
         return resultado;
     }
 
-    public int contarAutorizacoes() {
-        return this.autorizacoes.size();
-    }
-
-    public double percentualRealizados() {
-
-        int realizados = 0;
-
-        for (AutorizacaoExame autorizacao : autorizacoes) {
-
-            if (autorizacao.isRealizado()) {
-                realizados++;
-            }
-        }
-
-        if (autorizacoes.isEmpty()) {
-            return 0.0;
-        }
-
-        return (realizados * 100.0) / autorizacoes.size();
-    }
 
     public List<AutorizacaoExame> getAutorizacoes() {
         List<AutorizacaoExame> temp = new ArrayList<>();
