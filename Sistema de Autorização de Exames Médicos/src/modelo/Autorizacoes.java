@@ -38,11 +38,6 @@ public class Autorizacoes {
         return resultado;
     }
 
-    public List<AutorizacaoExame> filtrarPorPaciente(Paciente paciente) {
-        
-        return buscarPorPaciente(paciente);
-    }
-
     public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
         List<AutorizacaoExame> resultado = new ArrayList<>();
 
@@ -53,11 +48,6 @@ public class Autorizacoes {
             }
         }
         return resultado;
-    }
-
-    public List<AutorizacaoExame> filtrarPorMedico(Medico medico) {
-        
-        return buscarPorMedico(medico);
     }
 
     public List<AutorizacaoExame> buscarPorTipoExame(TipoExame tipoExame) {
