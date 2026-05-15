@@ -256,7 +256,7 @@ public class Sistema {
             if (!ValidadorDeDados.isIdentificadorValido(id)) {
                 System.out.println("Erro: Id deve ser maior que zero.");
                 return null;
-            }
+            }  
 
             if (usuarios.buscarPorID(id) != null) {
                 System.out.println("Erro: Já existe um usuário com esse Id.");
@@ -430,7 +430,7 @@ public class Sistema {
             Estatisticas.contarUsuarios(usuarios.getUsuarios()));
 
         System.out.println("Total de autorizações: " +
-            autorizacoes.contarAutorizacoes());
+            autorizacoes.getAutorizacoes().size());
 
         System.out.println("Percentual de exames realizados: " +
             Estatisticas.percentualExamesRealizados(autorizacoes.getAutorizacoes()) + "%");
