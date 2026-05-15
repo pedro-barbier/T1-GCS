@@ -118,7 +118,12 @@ public class Sistema {
     private void selecionarUsuario() {
         System.out.println("\n=== Selecionar Usuário ===");
         System.out.print("Digite o Nome do usuário: ");
-        String nome = scanner.nextLine();
+        String nome = scanner.nextLine().trim();
+
+        if (!ValidadorDeDados.isNomeValido(nome)) {
+            System.out.println("Nome inválido. Informe apenas letras e espaços.");
+            return;
+        }
 
         Usuario usuario = usuarios.buscarPorNome(nome);
         if (usuario != null) {
@@ -197,12 +202,20 @@ public class Sistema {
     private void criarNovoUsuario() {
         System.out.print("\nDeseja criar qual tipo de Usuário [Administrador, Médico, Paciente]: ");
         String tipo = scanner.nextLine().trim();
+        if (!ValidadorDeDados.isTextoValido(tipo)) {
+            System.out.println("Tipo de usuário inválido.");
+            return;
+        }
 
         Integer id = lerIdUsuario();
         if (id == null) { return; }
 
         System.out.print("Nome do novo Usuário: ");
         String nome = scanner.nextLine().trim();
+        if (!ValidadorDeDados.isNomeValido(nome)) {
+            System.out.println("Nome inválido. Informe apenas letras e espaços.");
+            return;
+        }
 
         Usuario usuario = criarUsuario(tipo, id, nome);
         if (usuario == null) {
@@ -240,8 +253,15 @@ public class Sistema {
         try {
             int id = scanner.nextInt();
             scanner.nextLine();
+            if (!ValidadorDeDados.isIdentificadorValido(id)) {
+                System.out.println("Erro: Id deve ser maior que zero.");
+                return null;
+            }
 
-            if (usuarios.buscarPorID(id) != null) { return null; }
+            if (usuarios.buscarPorID(id) != null) {
+                System.out.println("Erro: Já existe um usuário com esse Id.");
+                return null;
+            }
 
             return id;
         } catch (Exception e) {
