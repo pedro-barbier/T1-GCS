@@ -38,11 +38,6 @@ public class Autorizacoes {
         return resultado;
     }
 
-    public List<AutorizacaoExame> filtrarPorPaciente(Paciente paciente) {
-        
-        return buscarPorPaciente(paciente);
-    }
-
     public List<AutorizacaoExame> buscarPorMedico(Medico medico) {
         List<AutorizacaoExame> resultado = new ArrayList<>();
 
@@ -53,11 +48,6 @@ public class Autorizacoes {
             }
         }
         return resultado;
-    }
-
-    public List<AutorizacaoExame> filtrarPorMedico(Medico medico) {
-        
-        return buscarPorMedico(medico);
     }
 
     public List<AutorizacaoExame> buscarPorTipoExame(TipoExame tipoExame) {
@@ -71,28 +61,6 @@ public class Autorizacoes {
         }
 
         return resultado;
-    }
-
-    public int contarAutorizacoes() {
-        return this.autorizacoes.size();
-    }
-
-    public double percentualRealizados() {
-
-        int realizados = 0;
-
-        for (AutorizacaoExame autorizacao : autorizacoes) {
-
-            if (autorizacao.isRealizado()) {
-                realizados++;
-            }
-        }
-
-        if (autorizacoes.isEmpty()) {
-            return 0.0;
-        }
-
-        return (realizados * 100.0) / autorizacoes.size();
     }
 
     public List<AutorizacaoExame> getAutorizacoes() {
@@ -128,7 +96,7 @@ public class Autorizacoes {
         return resultado;
 
     }
-        
+
     public boolean marcarComoRealizado(int codigo, Paciente paciente, java.time.LocalDate dataRealizacao) {
 
         List<AutorizacaoExame> encontradas = buscarPorCodigo(codigo);
@@ -161,5 +129,3 @@ public class Autorizacoes {
         return true;
     }
 }
-
-

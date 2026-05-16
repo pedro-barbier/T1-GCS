@@ -31,7 +31,7 @@ public enum TipoExame {
     public int getCodigo() {
         return codigo;
     }
-    
+
     public String getDescricao() {
         return descricao;
     }
@@ -40,7 +40,7 @@ public enum TipoExame {
         String semHifen = tipo.trim().toUpperCase().replace("-", "");
 
         String nfdNormalizedString = Normalizer.normalize(semHifen, Normalizer.Form.NFD);
-        
+
         Pattern pattern = Pattern.compile("\\p{M}");
         String semAcentos = pattern.matcher(nfdNormalizedString).replaceAll("");
 

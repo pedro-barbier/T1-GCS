@@ -25,11 +25,31 @@ public class AutorizacaoExame {
         return dataRealizacao != null;
     }
 
-    public int getCodigo() { return codigo; }
-    public LocalDate getDataCadastro() { return dataCadastro; }
-    public Medico getMedicoSolicitante() { return medicoSolicitante; }
-    public Paciente getPaciente() { return paciente; }
-    public TipoExame getTipoExame() { return tipoExame; }
-    public LocalDate getDataRealizacao() { return dataRealizacao; }
-    public void setDataRealizacao(LocalDate data) { this.dataRealizacao = data; }
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public Medico getMedicoSolicitante() {
+        return medicoSolicitante;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public TipoExame getTipoExame() {
+        return tipoExame;
+    }
+
+    public LocalDate getDataRealizacao() {
+        return dataRealizacao;
+    }
+
+    public void setDataRealizacao(LocalDate data) {
+        this.dataRealizacao = data;
+    }
 }
